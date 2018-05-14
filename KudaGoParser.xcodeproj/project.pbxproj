@@ -12,6 +12,7 @@
 		5FA5E80F20A9650C0036F92A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FA5E80D20A9650C0036F92A /* Main.storyboard */; };
 		5FA5E81120A9650F0036F92A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FA5E81020A9650F0036F92A /* Assets.xcassets */; };
 		5FA5E81420A9650F0036F92A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FA5E81220A9650F0036F92A /* LaunchScreen.storyboard */; };
+		5FA5E81C20A9A3240036F92A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 5FA5E81B20A9A3240036F92A /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		5FA5E81020A9650F0036F92A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5FA5E81320A9650F0036F92A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5FA5E81520A9650F0036F92A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5FA5E81B20A9A3240036F92A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				5FA5E80920A9650C0036F92A /* AppDelegate.swift */,
 				5FA5E80B20A9650C0036F92A /* ViewController.swift */,
 				5FA5E80D20A9650C0036F92A /* Main.storyboard */,
+				5FA5E81B20A9A3240036F92A /* .gitignore */,
 				5FA5E81020A9650F0036F92A /* Assets.xcassets */,
 				5FA5E81220A9650F0036F92A /* LaunchScreen.storyboard */,
 				5FA5E81520A9650F0036F92A /* Info.plist */,
@@ -122,6 +125,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FA5E81C20A9A3240036F92A /* .gitignore in Resources */,
 				5FA5E81420A9650F0036F92A /* LaunchScreen.storyboard in Resources */,
 				5FA5E81120A9650F0036F92A /* Assets.xcassets in Resources */,
 				5FA5E80F20A9650C0036F92A /* Main.storyboard in Resources */,
