@@ -10,24 +10,41 @@ import UIKit
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
+    @IBOutlet weak var tableView: UITableView!
     
+    var parseManager = ParseManager()
+    let currentDate = Date().timeIntervalSince1970
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        parseManager.parseKudaGo(request: parseType.events(currentDate: currentDate).request) {_ in
+            self.tableView?.reloadData()
+        }
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return parseManager.listOfFields.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableViewCell
+        
+        fillDataIn(cell)
+        
+        return cell
+    }
+    
+    func fillDataIn(_ cell: TableViewCell) {
+        
+        
+        
     }
     
     

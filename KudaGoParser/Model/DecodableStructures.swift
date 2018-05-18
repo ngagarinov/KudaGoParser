@@ -16,17 +16,41 @@ struct eventsStruct: Decodable {
 
 struct resultStruct: Decodable {
     
+    let id: Int
     let title: String
     let description: String
     let place: placeStruct?
     let price: String
     let images: [imageStruct]
+    let dates: [datesStruct]
+    let bodyText: String
+    
+    enum keys: String,CodingKey {
+        case bodyText = "body_text"
+    }
     
 }
-struct imageStruct: Decodable {
-    let image: String
+
+struct datesStruct: Decodable {
+    
+    let start: Double
+    let end: Double
 }
 
+struct imageStruct: Decodable {
+    
+    let thumbnails: sizeStruct
+}
+
+struct sizeStruct: Decodable {
+    
+    let picture: String
+    
+    enum CodingKeys: String, CodingKey {
+        case picture = "640x384"
+    }
+    
+}
 struct placeStruct: Decodable {
     
     let address: String?

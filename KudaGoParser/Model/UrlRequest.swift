@@ -16,18 +16,18 @@ protocol FinalURLPoint {
 
 enum parseType: FinalURLPoint {
     
-    case events
-    case pages(page: Int)
+    case events(currentDate: Double)
+    case pages(page: Int, currentDate: Double)
     
     var baseURL: URL {
         return URL(string: "https://kudago.com/public-api/v1.4/")!
     }
     var path: String {
         switch self {
-        case .events:
-            return "events/?location=msk&fields=title,place,description,price,images,dates&expand=place,dates"
-        case .pages(let page):
-            return "events/?location=msk&fields=title,place,description,price,images,dates&page=\(page)"
+        case .events(let currentDate):
+            return "events/?location=msk&fields=id,title,place,description,price,images,dates&expand=images,place&actual_since=\(currentDate)"
+        case .pages(let page, let currentDate):
+            return "events/?location=msk&fields=id,title,place,description,price,images,dates&expand=images,place&page=\(page)&actual_since=\(currentDate)"
             
         }
     }

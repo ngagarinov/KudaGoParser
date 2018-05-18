@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F2B6BBC20AEB61600A011C7 /* Html2String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B6BBB20AEB61600A011C7 /* Html2String.swift */; };
 		5FA5E80A20A9650C0036F92A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E80920A9650C0036F92A /* AppDelegate.swift */; };
 		5FA5E80C20A9650C0036F92A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E80B20A9650C0036F92A /* ViewController.swift */; };
 		5FA5E80F20A9650C0036F92A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FA5E80D20A9650C0036F92A /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F2B6BBB20AEB61600A011C7 /* Html2String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Html2String.swift; sourceTree = "<group>"; };
 		5FA5E80620A9650C0036F92A /* KudaGoParser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KudaGoParser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FA5E80920A9650C0036F92A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5FA5E80B20A9650C0036F92A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -76,8 +78,9 @@
 		5FA5E82520A9AA400036F92A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5FA5E82320A9A9FE0036F92A /* UrlRequest.swift */,
+				5F2B6BBB20AEB61600A011C7 /* Html2String.swift */,
 				5FA5E81F20A9A7EE0036F92A /* DecodableStructures.swift */,
+				5FA5E82320A9A9FE0036F92A /* UrlRequest.swift */,
 				5FA5E82120A9A8B50036F92A /* ParseManager.swift */,
 			);
 			path = Model;
@@ -86,8 +89,8 @@
 		5FA5E82620A9AA5E0036F92A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				5FA5E81D20A9A7240036F92A /* TableViewCell.swift */,
 				5FA5E80B20A9650C0036F92A /* ViewController.swift */,
+				5FA5E81D20A9A7240036F92A /* TableViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				5FA5E80C20A9650C0036F92A /* ViewController.swift in Sources */,
 				5FA5E80A20A9650C0036F92A /* AppDelegate.swift in Sources */,
 				5FA5E82420A9A9FE0036F92A /* UrlRequest.swift in Sources */,
+				5F2B6BBC20AEB61600A011C7 /* Html2String.swift in Sources */,
 				5FA5E82020A9A7EE0036F92A /* DecodableStructures.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -326,7 +330,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PYTC3MQ92X;
-				INFOPLIST_FILE = KudaGoParser/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/KudaGoParser/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -345,7 +349,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PYTC3MQ92X;
-				INFOPLIST_FILE = KudaGoParser/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/KudaGoParser/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
