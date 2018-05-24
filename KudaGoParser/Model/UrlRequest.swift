@@ -25,9 +25,9 @@ enum parseType: FinalURLPoint {
     var path: String {
         switch self {
         case .events(let currentDate):
-            return "events/?location=msk&fields=id,title,place,description,price,images,dates&expand=images,place&actual_since=\(currentDate)"
+            return "events/?location=msk&fields=id,title,place,description,price,images,dates,body_text&expand=images,place&actual_since=\(currentDate)"
         case .pages(let page, let currentDate):
-            return "events/?location=msk&fields=id,title,place,description,price,images,dates&expand=images,place&page=\(page)&actual_since=\(currentDate)"
+            return "events/?location=msk&fields=id,title,place,description,price,images,dates,body_text&expand=images,place&page=\(page)&actual_since=\(currentDate)"
             
         }
     }

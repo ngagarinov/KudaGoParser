@@ -8,6 +8,7 @@
 
 import UIKit
 
+// структуры для парсинга списка
 struct eventsStruct: Decodable {
     
     let results: [resultStruct]
@@ -25,7 +26,15 @@ struct resultStruct: Decodable {
     let dates: [datesStruct]
     let bodyText: String
     
-    enum keys: String,CodingKey {
+    enum CodingKeys: String,CodingKey {
+        
+        case id
+        case title
+        case description
+        case place
+        case price
+        case images
+        case dates
         case bodyText = "body_text"
     }
     
@@ -51,7 +60,18 @@ struct sizeStruct: Decodable {
     }
     
 }
+
 struct placeStruct: Decodable {
     
     let address: String?
+}
+
+// структуры для парсинга картинок
+
+struct imagesStr: Decodable {
+    let images: [imageStr]
+}
+
+struct imageStr: Decodable {
+    let image: String
 }

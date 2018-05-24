@@ -11,6 +11,15 @@ import UIKit
 class TableViewCell: UITableViewCell {
 
     
+    
+    
+
+    @IBOutlet weak var shadowView: UIView!
+    @IBOutlet weak var placeStackView: UIStackView!
+    @IBOutlet weak var priceImage: UIImageView!
+    @IBOutlet weak var dateImage: UIImageView!
+    @IBOutlet weak var placeImage: UIImageView!
+    @IBOutlet weak var roundVIew: UIView!
     @IBOutlet weak var picture: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -21,13 +30,34 @@ class TableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        roundVIew.layer.masksToBounds = true
+        roundVIew.layer.cornerRadius = 16
+        shadowView.layer.cornerRadius = 16
+//        roundVIew.layer.borderWidth = 1.0
+//        roundVIew.layer.borderColor = UIColor.white.cgColor
+        shadowView.layer.shadowColor = UIColor.lightGray.cgColor
+        shadowView.layer.shadowRadius = 12.0
+        shadowView.layer.shadowOpacity = 0.2
+        shadowView.layer.shadowOffset = CGSize(width:0, height: 4)
+        shadowView.layer.shadowPath = UIBezierPath(rect: shadowView.bounds).cgPath
+
+  
     }
 
+    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        
+//        let f = contentView.frame
+//        let fr = UIEdgeInsetsInsetRect(f, UIEdgeInsetsMake(0, 0, 10, 0))
+//        contentView.frame = fr
+//    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
+    
+    
 
 }
