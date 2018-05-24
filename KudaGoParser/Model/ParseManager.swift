@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum parser {
+    case event
+    case images
+}
+
 class ParseManager {
     
     var listOfFields = [resultStruct]()
@@ -16,8 +21,9 @@ class ParseManager {
     var listOfDates = [datesStruct]()
     var listOfStart = [Double]()
     var listOfEnd = [Double]()
+    var listOfDetailImages = [detailImage]()
     
-    func parseKudaGo (request: URLRequest, completion: @escaping(Any) -> ()) {
+    func parseKudaGo (request: URLRequest, parse: parser, completion: @escaping(Any) -> ()) {
         
         let sessionConf = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConf)
@@ -30,36 +36,16 @@ class ParseManager {
             guard let data = data else {return}
             guard error == nil else {return}
             do {
-                let genreAr = try JSONDecoder().decode(eventsStruct.self, from: data)
-                // print( genreAr)
-                for eachElement in genreAr.results {
-                    let id = eachElement.id
-                    let title = eachElement.title
-                    let description = eachElement.description
-                    let price = eachElement.price
-                    let place = eachElement.place
-                    let address = place?.address
-                    let bodyText = eachElement.bodyText
-                    let images = eachElement.images
-                    for eachImage in images {
-                        let picture = eachImage.thumbnails.picture
-                        self.listOfImages.append(sizeStruct(picture: picture))
-                        break
-                    }
-                    let dates = eachElement.dates
-                    for eachDates in dates {
-                        let start = eachDates.start
-                        self.listOfStart.append(start)
-                        let end = eachDates.end
-                        self.listOfEnd.append(end)
-                    }
-                    self.listOfDates.append(datesStruct(start: self.listOfStart.first!, end: self.listOfEnd.last!))
-                    self.listOfStart.removeAll()
-                    self.listOfEnd.removeAll()
-                    self.listOfFields.append(resultStruct(id: id,title: title, description: description,place: place, price: price, images: images,dates: dates,bodyText: bodyText))
-                    self.listOfAddress.append(placeStruct(address: address))
+                switch parse {
+                case .event:
+                    let eventAr = try JSONDecoder().decode(eventsStruct.self, from: data)
+                    
+                    self.parseEvents(array: eventAr)
+                case .images:
+                    let imagesAr = try JSONDecoder().decode(detailImagesStruct.self, from: data)
+                    self.parseImages(array: imagesAr)
+                    
                 }
-                
                 
                 DispatchQueue.main.async {
                     completion(data)
@@ -72,5 +58,46 @@ class ParseManager {
         
         task.resume()
     }
+    
+    func parseEvents(array: eventsStruct ) {
+        
+        for eachElement in array.results {
+            let id = eachElement.id
+            let title = eachElement.title
+            let description = eachElement.description
+            let price = eachElement.price
+            let place = eachElement.place
+            let address = place?.address
+            let bodyText = eachElement.bodyText
+            let images = eachElement.images
+            for eachImage in images {
+                let picture = eachImage.thumbnails.picture
+                self.listOfImages.append(sizeStruct(picture: picture))
+                break
+            }
+            let dates = eachElement.dates
+            for eachDates in dates {
+                let start = eachDates.start
+                self.listOfStart.append(start)
+                let end = eachDates.end
+                self.listOfEnd.append(end)
+            }
+            self.listOfDates.append(datesStruct(start: self.listOfStart.first!, end: self.listOfEnd.last!))
+            self.listOfStart.removeAll()
+            self.listOfEnd.removeAll()
+            self.listOfFields.append(resultStruct(id: id,title: title, description: description,place: place, price: price, images: images,dates: dates,bodyText: bodyText))
+            self.listOfAddress.append(placeStruct(address: address))
+        }
+        
+    }
+    
+    func parseImages(array: detailImagesStruct) {
+        
+        for eachElement in array.images {
+            let image = eachElement.image
+            self.listOfDetailImages.append(detailImage(image: image))
+        }
+    }
+    
 }
 

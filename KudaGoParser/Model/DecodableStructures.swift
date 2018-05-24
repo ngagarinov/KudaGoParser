@@ -24,10 +24,9 @@ struct resultStruct: Decodable {
     let price: String
     let images: [imageStruct]
     let dates: [datesStruct]
-    let bodyText: String
+    let bodyText: String?
     
-    enum CodingKeys: String,CodingKey {
-        
+    enum CodingKeys: String, CodingKey {
         case id
         case title
         case description
@@ -60,18 +59,15 @@ struct sizeStruct: Decodable {
     }
     
 }
-
 struct placeStruct: Decodable {
     
     let address: String?
 }
 
-// структуры для парсинга картинок
-
-struct imagesStr: Decodable {
-    let images: [imageStr]
+struct detailImagesStruct: Decodable {
+    let images: [detailImage]
 }
 
-struct imageStr: Decodable {
+struct detailImage: Decodable {
     let image: String
 }

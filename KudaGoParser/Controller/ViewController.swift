@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
@@ -23,7 +24,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         setNavigationBarAppearance()
         setTableViewAppearance()
         
-        parseManager.parseKudaGo(request: parseType.events(currentDate: currentDate).request) {_ in
+        parseManager.parseKudaGo(request: parseType.events(currentDate: currentDate).request, parse: .event) {_ in
             self.tableView?.reloadData()
         }
         
@@ -84,6 +85,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
         let imageURL =  parseManager.listOfImages[indexPath.row].picture
         let url = URL(string: imageURL)
+        
+        cell.picture.sd_setImage(with: url) 
         // Nuke.loadImage(with: url!, into: cell.imageVi)
         //    cell.picture.image = #imageLiteral(resourceName: "kudagologo")
         
@@ -105,6 +108,18 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        var page = 1
+        if indexPath.row == parseManager.listOfFields.count - 1 {
+            page += 1
+            
+            parseManager.parseKudaGo(request: parseType.pages(page: page, currentDate: currentDate).request, parse: .event) {_ in
+                self.tableView?.reloadData()
+            }
+            
+        }
+    }
     
     func setNavigationBarAppearance() {
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -120,7 +135,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableTitle.text = "Куда сходить"
         tableView.delegate = self
         tableView.dataSource = self
-        //        tableView.separatorInset = .zero
+        //tableView.separatorInset = .zero
         // tableView.backgroundColor = UIColor.white
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
