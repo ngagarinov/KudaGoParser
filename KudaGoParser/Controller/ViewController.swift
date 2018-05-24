@@ -14,6 +14,12 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     @IBOutlet weak var tableTitle: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    var passId: Int?
+    var passPlace: String?
+    var passPrice: String?
+    var passDate: String?
+    private var page = 1
+    
     var parseManager = ParseManager()
     let currentDate = Date().timeIntervalSince1970
     
@@ -110,7 +116,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        var page = 1
+        
         if indexPath.row == parseManager.listOfFields.count - 1 {
             page += 1
             
@@ -120,6 +126,46 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             
         }
     }
+    
+     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! TableViewCell
+        
+        passPrice = cell.priceLabel.text
+        passDate = cell.dateLabel.text
+        passPlace = cell.placeLabel.text
+        
+        performSegue(withIdentifier: "detailSegue", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "detailSegue" {
+            if let indexPath  = tableView.indexPathForSelectedRow {
+                
+                let dvc = segue.destination  as! DetailViewController
+                
+                let id = parseManager.listOfFields[indexPath.row].id
+                if let bodyText = parseManager.listOfFields[indexPath.row].bodyText {
+                    dvc.eventDetail = bodyText
+                } else {
+                    dvc.eventDetail = "net"
+                }
+                let desc = parseManager.listOfFields[indexPath.row].description
+                let title = parseManager.listOfFields[indexPath.row].title
+                
+                
+                dvc.eventId = id
+                dvc.eventTitle = title
+                
+                dvc.eventDesc = desc
+                dvc.eventPrice = passPrice
+                dvc.eventDate = passDate
+                dvc.eventPlace = passPlace
+                
+            }
+        }
+    }
+    
     
     func setNavigationBarAppearance() {
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -141,6 +187,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.rowHeight = UITableViewAutomaticDimension
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        //setNavigationBarAppearance()
+        //navigationController?.isNavigationBarHidden = false
+        
+        
+    }
+    
 
 }
 

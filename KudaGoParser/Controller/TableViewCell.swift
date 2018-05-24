@@ -37,9 +37,9 @@ class TableViewCell: UITableViewCell {
 //        roundVIew.layer.borderColor = UIColor.white.cgColor
         shadowView.layer.shadowColor = UIColor.lightGray.cgColor
         shadowView.layer.shadowRadius = 12.0
-        shadowView.layer.shadowOpacity = 0.2
+        shadowView.layer.shadowOpacity = 0.25
         shadowView.layer.shadowOffset = CGSize(width:0, height: 4)
-        shadowView.layer.shadowPath = UIBezierPath(rect: shadowView.bounds).cgPath
+
 
   
     }
