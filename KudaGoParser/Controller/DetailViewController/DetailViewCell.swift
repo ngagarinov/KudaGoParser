@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import MapKit
 
 class DetailViewCell: UITableViewCell,UIScrollViewDelegate {
 
-    
+    @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
@@ -19,21 +20,13 @@ class DetailViewCell: UITableViewCell,UIScrollViewDelegate {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var placeStackView: UIStackView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         pageControl.superview?.bringSubview(toFront: pageControl)
         scrollView.delegate = self
-
-    }
-
-
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

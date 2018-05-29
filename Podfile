@@ -3,4 +3,5 @@ use_frameworks!
 
 target 'KudaGoParser' do
 pod 'SDWebImage', '~> 4.0'
+pod 'AlamofireImage', '~> 3.3'
 end

@@ -21,7 +21,8 @@ class ParseManager {
     var listOfDates = [datesStruct]()
     var listOfStart = [Double]()
     var listOfEnd = [Double]()
-    var listOfDetailImages = [detailImage]()
+    var listOfDetailImages = [sizeStruct]()
+    var listOfCoords = [coordsStruct]()
     
     func parseKudaGo (request: URLRequest, parse: parser, completion: @escaping(Any) -> ()) {
         
@@ -68,6 +69,9 @@ class ParseManager {
             let price = eachElement.price
             let place = eachElement.place
             let address = place?.address
+            let coords = place?.coords
+            let lat = coords?.lat
+            let lon = coords?.lon
             let bodyText = eachElement.bodyText
             let images = eachElement.images
             for eachImage in images {
@@ -85,8 +89,9 @@ class ParseManager {
             self.listOfDates.append(datesStruct(start: self.listOfStart.first!, end: self.listOfEnd.last!))
             self.listOfStart.removeAll()
             self.listOfEnd.removeAll()
-            self.listOfFields.append(resultStruct(id: id,title: title, description: description,place: place, price: price, images: images,dates: dates,bodyText: bodyText))
-            self.listOfAddress.append(placeStruct(address: address))
+            self.listOfFields.append(resultStruct(id: id,title: title, description: description,place: place, price: price, images: images, dates: dates,bodyText: bodyText))
+            self.listOfAddress.append(placeStruct(address: address, coords: coords))
+            self.listOfCoords.append(coordsStruct(lat: lat, lon: lon))
         }
         
     }
@@ -94,8 +99,8 @@ class ParseManager {
     func parseImages(array: detailImagesStruct) {
         
         for eachElement in array.images {
-            let image = eachElement.image
-            self.listOfDetailImages.append(detailImage(image: image))
+            let image = eachElement.thumbnails.picture
+            self.listOfDetailImages.append(sizeStruct(picture: image))
         }
     }
     

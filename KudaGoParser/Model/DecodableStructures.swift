@@ -57,17 +57,19 @@ struct sizeStruct: Decodable {
     enum CodingKeys: String, CodingKey {
         case picture = "640x384"
     }
-    
 }
 struct placeStruct: Decodable {
     
     let address: String?
+    let coords: coordsStruct?
+}
+
+struct coordsStruct: Decodable {
+    let lat: Double?
+    let lon: Double?
 }
 
 struct detailImagesStruct: Decodable {
-    let images: [detailImage]
+    let images: [imageStruct]
 }
 
-struct detailImage: Decodable {
-    let image: String
-}

@@ -8,7 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		4EF8E777DBF892A5E10B7CD3 /* Pods_KudaGoParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4950C3EA53DDBD31CE2F7FD /* Pods_KudaGoParser.framework */; };
-		5F2B6BBC20AEB61600A011C7 /* Html2String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B6BBB20AEB61600A011C7 /* Html2String.swift */; };
+		5F097E6820BBFC24007304B4 /* AnnotationPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F097E6720BBFC24007304B4 /* AnnotationPin.swift */; };
+		5F5C96DA20BC74D400114570 /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C96D920BC74D400114570 /* CustomPageControl.swift */; };
+		5F5C96E520BD3A0B00114570 /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F5C96E420BC9E5600114570 /* SF-Pro-Display-Bold.otf */; };
+		5F5C96E620BD3A0D00114570 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F5C96E320BC9DA000114570 /* SF-Pro-Text-Bold.otf */; };
+		5F5C96E720BD3A1000114570 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F5C96E220BC9D7200114570 /* SF-Pro-Text-Semibold.otf */; };
+		5F5C96E820BD3A1200114570 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F5C96DF20BC9C9000114570 /* SF-Pro-Text-Regular.otf */; };
 		5FA4A2DE20B6DEF8003B924E /* DetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA4A2DD20B6DEF8003B924E /* DetailViewCell.swift */; };
 		5FA4A2E020B6DF73003B924E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA4A2DF20B6DF73003B924E /* DetailViewController.swift */; };
 		5FA5E80A20A9650C0036F92A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E80920A9650C0036F92A /* AppDelegate.swift */; };
@@ -21,10 +26,17 @@
 		5FA5E82020A9A7EE0036F92A /* DecodableStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E81F20A9A7EE0036F92A /* DecodableStructures.swift */; };
 		5FA5E82220A9A8B50036F92A /* ParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E82120A9A8B50036F92A /* ParseManager.swift */; };
 		5FA5E82420A9A9FE0036F92A /* UrlRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E82320A9A9FE0036F92A /* UrlRequest.swift */; };
+		5FCF390820B805F1000B19AF /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FCF390720B805F1000B19AF /* MapKit.framework */; };
+		5FCF391120B8B0D2000B19AF /* RefreshContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FCF391020B8B0D2000B19AF /* RefreshContent.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5F2B6BBB20AEB61600A011C7 /* Html2String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Html2String.swift; sourceTree = "<group>"; };
+		5F097E6720BBFC24007304B4 /* AnnotationPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationPin.swift; sourceTree = "<group>"; };
+		5F5C96D920BC74D400114570 /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
+		5F5C96DF20BC9C9000114570 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
+		5F5C96E220BC9D7200114570 /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Semibold.otf"; path = "../../../../../Library/Fonts/SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
+		5F5C96E320BC9DA000114570 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Bold.otf"; path = "../../../../../Library/Fonts/SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
+		5F5C96E420BC9E5600114570 /* SF-Pro-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Display-Bold.otf"; path = "../../../../../Library/Fonts/SF-Pro-Display-Bold.otf"; sourceTree = "<group>"; };
 		5FA4A2DD20B6DEF8003B924E /* DetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCell.swift; sourceTree = "<group>"; };
 		5FA4A2DF20B6DF73003B924E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		5FA5E80620A9650C0036F92A /* KudaGoParser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KudaGoParser.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -39,6 +51,8 @@
 		5FA5E81F20A9A7EE0036F92A /* DecodableStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableStructures.swift; sourceTree = "<group>"; };
 		5FA5E82120A9A8B50036F92A /* ParseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseManager.swift; sourceTree = "<group>"; };
 		5FA5E82320A9A9FE0036F92A /* UrlRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlRequest.swift; sourceTree = "<group>"; };
+		5FCF390720B805F1000B19AF /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		5FCF391020B8B0D2000B19AF /* RefreshContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RefreshContent.xib; sourceTree = "<group>"; };
 		82173B61C174347F25878969 /* Pods-KudaGoParser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KudaGoParser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KudaGoParser/Pods-KudaGoParser.debug.xcconfig"; sourceTree = "<group>"; };
 		8B1961C9338FA6E5D2C40985 /* Pods-KudaGoParser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KudaGoParser.release.xcconfig"; path = "Pods/Target Support Files/Pods-KudaGoParser/Pods-KudaGoParser.release.xcconfig"; sourceTree = "<group>"; };
 		E4950C3EA53DDBD31CE2F7FD /* Pods_KudaGoParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KudaGoParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FCF390820B805F1000B19AF /* MapKit.framework in Frameworks */,
 				4EF8E777DBF892A5E10B7CD3 /* Pods_KudaGoParser.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -59,6 +74,7 @@
 		293C6F74F7195C1250038670 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5FCF390720B805F1000B19AF /* MapKit.framework */,
 				E4950C3EA53DDBD31CE2F7FD /* Pods_KudaGoParser.framework */,
 			);
 			name = Frameworks;
@@ -71,6 +87,35 @@
 				8B1961C9338FA6E5D2C40985 /* Pods-KudaGoParser.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		5F5C96DB20BC944D00114570 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5FA5E80B20A9650C0036F92A /* ViewController.swift */,
+				5FA5E81D20A9A7240036F92A /* TableViewCell.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		5F5C96DC20BC947500114570 /* DetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5FA4A2DF20B6DF73003B924E /* DetailViewController.swift */,
+				5FA4A2DD20B6DEF8003B924E /* DetailViewCell.swift */,
+			);
+			path = DetailViewController;
+			sourceTree = "<group>";
+		};
+		5F5C96DE20BC9C8F00114570 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				5F5C96E420BC9E5600114570 /* SF-Pro-Display-Bold.otf */,
+				5F5C96E320BC9DA000114570 /* SF-Pro-Text-Bold.otf */,
+				5F5C96E220BC9D7200114570 /* SF-Pro-Text-Semibold.otf */,
+				5F5C96DF20BC9C9000114570 /* SF-Pro-Text-Regular.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		5FA5E7FD20A9650B0036F92A = {
@@ -98,6 +143,8 @@
 				5FA5E82520A9AA400036F92A /* Model */,
 				5FA5E80D20A9650C0036F92A /* Main.storyboard */,
 				5FA5E81220A9650F0036F92A /* LaunchScreen.storyboard */,
+				5FCF391020B8B0D2000B19AF /* RefreshContent.xib */,
+				5F5C96DE20BC9C8F00114570 /* Fonts */,
 				5FA5E82720A9AA710036F92A /* SupportingFiles */,
 			);
 			path = KudaGoParser;
@@ -106,7 +153,6 @@
 		5FA5E82520A9AA400036F92A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5F2B6BBB20AEB61600A011C7 /* Html2String.swift */,
 				5FA5E81F20A9A7EE0036F92A /* DecodableStructures.swift */,
 				5FA5E82320A9A9FE0036F92A /* UrlRequest.swift */,
 				5FA5E82120A9A8B50036F92A /* ParseManager.swift */,
@@ -117,10 +163,10 @@
 		5FA5E82620A9AA5E0036F92A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				5FA5E80B20A9650C0036F92A /* ViewController.swift */,
-				5FA5E81D20A9A7240036F92A /* TableViewCell.swift */,
-				5FA4A2DF20B6DF73003B924E /* DetailViewController.swift */,
-				5FA4A2DD20B6DEF8003B924E /* DetailViewCell.swift */,
+				5F5C96DB20BC944D00114570 /* ViewController */,
+				5F5C96DC20BC947500114570 /* DetailViewController */,
+				5F5C96D920BC74D400114570 /* CustomPageControl.swift */,
+				5F097E6720BBFC24007304B4 /* AnnotationPin.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -170,6 +216,11 @@
 				TargetAttributes = {
 					5FA5E80520A9650B0036F92A = {
 						CreatedOnToolsVersion = 9.3;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -197,7 +248,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FA5E81C20A9A3240036F92A /* .gitignore in Resources */,
+				5F5C96E620BD3A0D00114570 /* SF-Pro-Text-Bold.otf in Resources */,
+				5FCF391120B8B0D2000B19AF /* RefreshContent.xib in Resources */,
+				5F5C96E520BD3A0B00114570 /* SF-Pro-Display-Bold.otf in Resources */,
+				5F5C96E720BD3A1000114570 /* SF-Pro-Text-Semibold.otf in Resources */,
 				5FA5E81420A9650F0036F92A /* LaunchScreen.storyboard in Resources */,
+				5F5C96E820BD3A1200114570 /* SF-Pro-Text-Regular.otf in Resources */,
 				5FA5E81120A9650F0036F92A /* Assets.xcassets in Resources */,
 				5FA5E80F20A9650C0036F92A /* Main.storyboard in Resources */,
 			);
@@ -231,10 +287,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-KudaGoParser/Pods-KudaGoParser-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -249,14 +309,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F097E6820BBFC24007304B4 /* AnnotationPin.swift in Sources */,
 				5FA4A2E020B6DF73003B924E /* DetailViewController.swift in Sources */,
 				5FA5E81E20A9A7240036F92A /* TableViewCell.swift in Sources */,
 				5FA5E82220A9A8B50036F92A /* ParseManager.swift in Sources */,
 				5FA5E80C20A9650C0036F92A /* ViewController.swift in Sources */,
+				5F5C96DA20BC74D400114570 /* CustomPageControl.swift in Sources */,
 				5FA5E80A20A9650C0036F92A /* AppDelegate.swift in Sources */,
 				5FA5E82420A9A9FE0036F92A /* UrlRequest.swift in Sources */,
 				5FA4A2DE20B6DEF8003B924E /* DetailViewCell.swift in Sources */,
-				5F2B6BBC20AEB61600A011C7 /* Html2String.swift in Sources */,
 				5FA5E82020A9A7EE0036F92A /* DecodableStructures.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

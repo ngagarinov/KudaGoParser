@@ -8,6 +8,8 @@
 
 import UIKit
 import SDWebImage
+import Alamofire
+import AlamofireImage
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
@@ -15,27 +17,79 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     @IBOutlet weak var tableView: UITableView!
     
     var passId: Int?
-    var passPlace: String?
+    var passPlace: String? 
     var passPrice: String?
     var passDate: String?
     private var page = 1
-    
     var parseManager = ParseManager()
     let currentDate = Date().timeIntervalSince1970
     
-
+    var refreshControl: UIRefreshControl?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setNavigationBarAppearance()
         setTableViewAppearance()
         
+        refreshControl = createRefreshControl()
+        loadRefresh()
+        tableView.addSubview(refreshControl!)
+        
         parseManager.parseKudaGo(request: parseType.events(currentDate: currentDate).request, parse: .event) {_ in
             self.tableView?.reloadData()
         }
         
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
 
+    
+    func createRefreshControl() -> UIRefreshControl {
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        refreshControl?.backgroundColor = UIColor.clear
+        refreshControl?.tintColor = UIColor.clear
+        return refreshControl!
+    }
+    
+    func loadRefresh() {
+        
+        let refreshContent = Bundle.main.loadNibNamed("RefreshContent", owner: self, options: nil)
+        let customRefreshView = refreshContent![0] as! UIView
+        customRefreshView.frame = (refreshControl?.bounds)!
+        
+        let customImage = customRefreshView.viewWithTag(1) as! UIImageView
+        
+        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        rotateAnimation.fromValue = 0.0
+        rotateAnimation.toValue = CGFloat(.pi * 2.0)
+        rotateAnimation.duration = 1.5
+        rotateAnimation.repeatCount = Float.greatestFiniteMagnitude;
+        
+        customImage.layer.add(rotateAnimation, forKey: nil)
+        
+        refreshControl?.addSubview(customRefreshView)
+        
+    }
+    
+    @objc func pullToRefresh () {
+//        page = 1
+//        parseManager.listOfFields.removeAll()
+//        parseManager.listOfDates.removeAll()
+//        parseManager.listOfAddress.removeAll()
+//        parseManager.listOfImages.removeAll()
+//        parseManager.listOfStart.removeAll()
+//        parseManager.listOfEnd.removeAll()
+        parseManager.parseKudaGo(request: parseType.events(currentDate: currentDate).request, parse: .event) {_ in
+            self.tableView?.reloadData()
+            self.refreshControl?.endRefreshing()
+        }
+        
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -54,20 +108,21 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     func fillDataIn(_ cell: TableViewCell, indexPath: IndexPath) {
 
         cell.titleLabel.text = parseManager.listOfFields[indexPath.row].title.uppercased()
-        cell.descriptionLabel.text = parseManager.listOfFields[indexPath.row].description.html2String
+        cell.descriptionLabel.text = parseManager.listOfFields[indexPath.row].description
         let price = parseManager.listOfFields[indexPath.row].price
         if  price == ""{
             cell.priceLabel.text = "Бесплатно"
         } else {
-            cell.priceLabel.text = price
+            cell.priceLabel.text = price 
         }
         if let place = parseManager.listOfAddress[indexPath.row].address {
             cell.placeLabel.text = place
+            cell.placeStackView.isHidden = false
         } else {
-            cell.placeStackView.isHidden = true 
+            cell.placeLabel.text = " MESTA NET NO VI DERJItES'"
+            cell.placeStackView.isHidden = true
         }
 
-//cell.backgroundColor = .white
         let startUnixDate = parseManager.listOfDates[indexPath.row].start
         let endUnixDate = parseManager.listOfDates[indexPath.row].end
         let startDate = Date(timeIntervalSince1970: startUnixDate )
@@ -92,30 +147,23 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         let imageURL =  parseManager.listOfImages[indexPath.row].picture
         let url = URL(string: imageURL)
         
-        cell.picture.sd_setImage(with: url) 
+//        cell.picture.sd_setImage(with: url)
         // Nuke.loadImage(with: url!, into: cell.imageVi)
         //    cell.picture.image = #imageLiteral(resourceName: "kudagologo")
         
-//        Alamofire.request(url!).responseImage { response in
-//            debugPrint(response)
-//
-//            if let image = response.result.value {
-//                cell.imageVi.image = image
-//            }
-//        }
-        
-        cell.clipsToBounds = false
-        
-        //Set containerView padding
-  
-        
-        //Make cell selection invisible
+        Alamofire.request(url!).responseImage { response in
+            debugPrint(response)
+
+            if let image = response.result.value {
+                cell.picture.image = image
+            }
+        }
+        cell.clipsToBounds = true
         cell.selectionStyle = .none
         
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
         
         if indexPath.row == parseManager.listOfFields.count - 1 {
             page += 1
@@ -123,7 +171,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             parseManager.parseKudaGo(request: parseType.pages(page: page, currentDate: currentDate).request, parse: .event) {_ in
                 self.tableView?.reloadData()
             }
-            
         }
     }
     
@@ -132,7 +179,16 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         passPrice = cell.priceLabel.text
         passDate = cell.dateLabel.text
+        if !cell.placeStackView.isHidden {
         passPlace = cell.placeLabel.text
+        } else {
+            passPlace = nil
+        }
+        
+        
+        print(parseManager.listOfFields[indexPath.row].id)
+        
+        
         
         performSegue(withIdentifier: "detailSegue", sender: self)
     }
@@ -152,11 +208,16 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 }
                 let desc = parseManager.listOfFields[indexPath.row].description
                 let title = parseManager.listOfFields[indexPath.row].title
-                
+                if let latitude = parseManager.listOfCoords[indexPath.row].lat, let longitude = parseManager.listOfCoords[indexPath.row].lon {
+                    dvc.lat = latitude
+                    dvc.lon = longitude
+                } else {
+                    dvc.lat = nil
+                    dvc.lon = nil
+                }
                 
                 dvc.eventId = id
                 dvc.eventTitle = title
-                
                 dvc.eventDesc = desc
                 dvc.eventPrice = passPrice
                 dvc.eventDate = passDate
@@ -165,7 +226,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             }
         }
     }
-    
     
     func setNavigationBarAppearance() {
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -181,19 +241,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableTitle.text = "Куда сходить"
         tableView.delegate = self
         tableView.dataSource = self
-        //tableView.separatorInset = .zero
-        // tableView.backgroundColor = UIColor.white
+        tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        //setNavigationBarAppearance()
-        //navigationController?.isNavigationBarHidden = false
-        
-        
-    }
-    
 
 }
 
