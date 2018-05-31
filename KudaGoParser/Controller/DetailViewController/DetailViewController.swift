@@ -8,8 +8,13 @@
 
 import UIKit
 import MapKit
+import Nuke
+
+
 
 class DetailViewController: UITableViewController, MKMapViewDelegate {
+    
+    var popRecognizer: InteractivePopRecognizer?
 
     var lat: Double?
     var lon: Double?
@@ -30,6 +35,7 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
         super.viewDidLoad()
         
         setTableViewAppearance()
+        setInteractiveRecognizer()
         
         parseManager.parseKudaGo(request: parseType.detail(id: eventId!).request, parse: .images) {_ in
             self.tableView?.reloadData()
@@ -37,17 +43,22 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
         
     }
     
+    private func setInteractiveRecognizer() {
+        guard let controller = navigationController else { return }
+        popRecognizer = InteractivePopRecognizer(controller: controller)
+        controller.interactivePopGestureRecognizer?.delegate = popRecognizer
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         createFloatingButton()
         setStatusBar()
-
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         
+        navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.isNavigationBarHidden = false
         UIApplication.shared.statusBarStyle = .default
     }
 
@@ -81,7 +92,7 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
             imgView.clipsToBounds = true
             
             let url = URL(string:  parseManager.listOfDetailImages[index].picture)
-            imgView.sd_setImage(with: url )
+            Nuke.Manager.shared.loadImage(with:url!, into: imgView)
             cell.scrollView.addSubview(imgView)
         }
         
@@ -140,6 +151,7 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
     }
     
     func setStatusBar() {
+
         if let statusbar = UIApplication.shared.value(forKey: "statusBar") as? UIView {
             statusbar.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4)
         }
@@ -166,7 +178,7 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
     }
     
     @objc func backAction() {
-        navigationController?.popViewController(animated: false)
+        navigationController?.popViewController(animated: true)
         
     }
     
@@ -176,7 +188,6 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
         
         return annotationView
     }
-    
     
 }
 

@@ -26,8 +26,12 @@
 		5FA5E82020A9A7EE0036F92A /* DecodableStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E81F20A9A7EE0036F92A /* DecodableStructures.swift */; };
 		5FA5E82220A9A8B50036F92A /* ParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E82120A9A8B50036F92A /* ParseManager.swift */; };
 		5FA5E82420A9A9FE0036F92A /* UrlRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E82320A9A9FE0036F92A /* UrlRequest.swift */; };
+		5FBE6FA120BEDB5600FDB1B3 /* NoConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FBE6FA020BEDB5600FDB1B3 /* NoConnectionViewController.swift */; };
 		5FCF390820B805F1000B19AF /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FCF390720B805F1000B19AF /* MapKit.framework */; };
 		5FCF391120B8B0D2000B19AF /* RefreshContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FCF391020B8B0D2000B19AF /* RefreshContent.xib */; };
+		5FD3B57620BD799A002CA5D2 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3B57520BD799A002CA5D2 /* ShadowView.swift */; };
+		5FD3B57820BD7A31002CA5D2 /* InteractivePopRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3B57720BD7A31002CA5D2 /* InteractivePopRecognizer.swift */; };
+		5FD3B59A20BE8060002CA5D2 /* MyIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3B59920BE8060002CA5D2 /* MyIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,8 +55,12 @@
 		5FA5E81F20A9A7EE0036F92A /* DecodableStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableStructures.swift; sourceTree = "<group>"; };
 		5FA5E82120A9A8B50036F92A /* ParseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseManager.swift; sourceTree = "<group>"; };
 		5FA5E82320A9A9FE0036F92A /* UrlRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlRequest.swift; sourceTree = "<group>"; };
+		5FBE6FA020BEDB5600FDB1B3 /* NoConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoConnectionViewController.swift; sourceTree = "<group>"; };
 		5FCF390720B805F1000B19AF /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		5FCF391020B8B0D2000B19AF /* RefreshContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RefreshContent.xib; sourceTree = "<group>"; };
+		5FD3B57520BD799A002CA5D2 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
+		5FD3B57720BD7A31002CA5D2 /* InteractivePopRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractivePopRecognizer.swift; sourceTree = "<group>"; };
+		5FD3B59920BE8060002CA5D2 /* MyIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyIndicator.swift; sourceTree = "<group>"; };
 		82173B61C174347F25878969 /* Pods-KudaGoParser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KudaGoParser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KudaGoParser/Pods-KudaGoParser.debug.xcconfig"; sourceTree = "<group>"; };
 		8B1961C9338FA6E5D2C40985 /* Pods-KudaGoParser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KudaGoParser.release.xcconfig"; path = "Pods/Target Support Files/Pods-KudaGoParser/Pods-KudaGoParser.release.xcconfig"; sourceTree = "<group>"; };
 		E4950C3EA53DDBD31CE2F7FD /* Pods_KudaGoParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KudaGoParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,13 +97,13 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		5F5C96DB20BC944D00114570 /* ViewController */ = {
+		5F5C96DB20BC944D00114570 /* EventViewController */ = {
 			isa = PBXGroup;
 			children = (
 				5FA5E80B20A9650C0036F92A /* ViewController.swift */,
 				5FA5E81D20A9A7240036F92A /* TableViewCell.swift */,
 			);
-			path = ViewController;
+			path = EventViewController;
 			sourceTree = "<group>";
 		};
 		5F5C96DC20BC947500114570 /* DetailViewController */ = {
@@ -163,10 +171,14 @@
 		5FA5E82620A9AA5E0036F92A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				5F5C96DB20BC944D00114570 /* ViewController */,
+				5F5C96DB20BC944D00114570 /* EventViewController */,
 				5F5C96DC20BC947500114570 /* DetailViewController */,
+				5FBE6FA020BEDB5600FDB1B3 /* NoConnectionViewController.swift */,
 				5F5C96D920BC74D400114570 /* CustomPageControl.swift */,
+				5FD3B57720BD7A31002CA5D2 /* InteractivePopRecognizer.swift */,
+				5FD3B57520BD799A002CA5D2 /* ShadowView.swift */,
 				5F097E6720BBFC24007304B4 /* AnnotationPin.swift */,
+				5FD3B59920BE8060002CA5D2 /* MyIndicator.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -289,13 +301,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-KudaGoParser/Pods-KudaGoParser-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Nuke/Nuke.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nuke.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -310,14 +322,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F097E6820BBFC24007304B4 /* AnnotationPin.swift in Sources */,
+				5FD3B57620BD799A002CA5D2 /* ShadowView.swift in Sources */,
 				5FA4A2E020B6DF73003B924E /* DetailViewController.swift in Sources */,
 				5FA5E81E20A9A7240036F92A /* TableViewCell.swift in Sources */,
+				5FD3B59A20BE8060002CA5D2 /* MyIndicator.swift in Sources */,
 				5FA5E82220A9A8B50036F92A /* ParseManager.swift in Sources */,
 				5FA5E80C20A9650C0036F92A /* ViewController.swift in Sources */,
 				5F5C96DA20BC74D400114570 /* CustomPageControl.swift in Sources */,
 				5FA5E80A20A9650C0036F92A /* AppDelegate.swift in Sources */,
 				5FA5E82420A9A9FE0036F92A /* UrlRequest.swift in Sources */,
 				5FA4A2DE20B6DEF8003B924E /* DetailViewCell.swift in Sources */,
+				5FD3B57820BD7A31002CA5D2 /* InteractivePopRecognizer.swift in Sources */,
+				5FBE6FA120BEDB5600FDB1B3 /* NoConnectionViewController.swift in Sources */,
 				5FA5E82020A9A7EE0036F92A /* DecodableStructures.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

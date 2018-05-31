@@ -8,25 +8,6 @@
 
 import UIKit
 
-class ShadowView: UIView {
-    override var bounds: CGRect {
-        didSet {
-            setupShadow()
-        }
-    }
-
-    private func setupShadow() {
-        self.layer.cornerRadius = 16
-        self.layer.shadowOffset = CGSize(width: 0, height: 0)
-        self.layer.shadowRadius = 12
-        self.layer.shadowOpacity = 0.12
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: 16).cgPath
-        self.layer.shouldRasterize = true
-        self.layer.rasterizationScale = UIScreen.main.scale
-    }
-}
-
 class TableViewCell: UITableViewCell {
 
     @IBOutlet weak var shadowView: UIView!
@@ -54,8 +35,7 @@ class TableViewCell: UITableViewCell {
 //        shadowView.layer.shadowOpacity = 0.2
 //        shadowView.layer.shadowOffset = CGSize(width:0, height: 0)
 //        shadowView.layer.masksToBounds = false
-        
     }
-
     
+
 }

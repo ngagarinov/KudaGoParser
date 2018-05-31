@@ -2,25 +2,23 @@ PODS:
   - Alamofire (4.5.1)
   - AlamofireImage (3.3.0):
     - Alamofire (~> 4.5)
-  - SDWebImage (4.2.2):
-    - SDWebImage/Core (= 4.2.2)
-  - SDWebImage/Core (4.2.2)
+  - Nuke (6.1.1)
 
 DEPENDENCIES:
   - AlamofireImage (~> 3.3)
-  - SDWebImage (~> 4.0)
+  - Nuke (~> 6.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - AlamofireImage
-    - SDWebImage
+    - Nuke
 
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   AlamofireImage: 2e784dc5d00f04903a52c1d169181469c805c3df
-  SDWebImage: 89a9d32cd520bbb46eb14e541d5109b3564af198
+  Nuke: bf5d58b2d95ff15cb170c231fe6002d706be77e1
 
-PODFILE CHECKSUM: 22b6e5415f6e7f1dca0f6caf0f3f3afb836ebadd
+PODFILE CHECKSUM: ab44d37a1cec44883f0a5ec5985b3f390af1ad65
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.5.3

@@ -7,9 +7,16 @@
 //
 
 import UIKit
-import SDWebImage
 import Alamofire
 import AlamofireImage
+import Nuke
+
+class Connectivity {
+    class func isConnectedToInternet() ->Bool {
+        return NetworkReachabilityManager()!.isReachable
+    }
+}
+
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
@@ -26,27 +33,67 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     var refreshControl: UIRefreshControl?
     
+    var spinner: MyIndicator?
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setNavigationBarAppearance()
-        setTableViewAppearance()
-        
-        refreshControl = createRefreshControl()
-        loadRefresh()
-        tableView.addSubview(refreshControl!)
-        
-        parseManager.parseKudaGo(request: parseType.events(currentDate: currentDate).request, parse: .event) {_ in
-            self.tableView?.reloadData()
+        if !Connectivity.isConnectedToInternet() {
+            showOfflinePage()
+        } else {
+            
+            createLoader()
+            setTableViewAppearance()
+            
+            //        refreshControl = UIRefreshControl()
+            //refreshControl = createRefreshControl()
+            //loadRefresh()
+            //        refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+            //        tableView.addSubview(refreshControl!)
+            
+            
+            parseManager.parseKudaGo(request: parseType.events(currentDate: currentDate).request, parse: .event) {_ in
+                self.tableView?.reloadData()
+                self.spinner?.stopAnimating()
+                self.tableView.isHidden = false
+                //self.navigationController?.isNavigationBarHidden = false
+                self.navigationController?.setNavigationBarHidden(false, animated: false)
+                self.setNavigationBarAppearance()
+                
+            }
         }
-        
     }
+    
+    private func showOfflinePage() -> Void {
+        UIView.setAnimationsEnabled(false)
+        self.performSegue(withIdentifier: "noInternet", sender: self)
+       // UIView.setAnimationsEnabled(true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //navigationController?.setNavigationBarHidden(false, animated: true)
+        //setNavigationBarAppearance()
+    }
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: true)
+       // navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
+    
+    func createLoader() {
+        spinner = MyIndicator(frame: CGRect(x: 0, y: 0 , width: 32, height: 32), image: UIImage(named: "loader")!)
+        spinner?.center = self.view.center
+        self.view.addSubview(spinner!)
+        spinner?.startAnimating()
+        spinner?.backgroundColor = .white
+        view.backgroundColor = .white
+        tableView.isHidden = true
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
     
     func createRefreshControl() -> UIRefreshControl {
         refreshControl = UIRefreshControl()
@@ -64,13 +111,16 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         let customImage = customRefreshView.viewWithTag(1) as! UIImageView
         
-        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
-        rotateAnimation.fromValue = 0.0
-        rotateAnimation.toValue = CGFloat(.pi * 2.0)
-        rotateAnimation.duration = 1.5
-        rotateAnimation.repeatCount = Float.greatestFiniteMagnitude;
+//        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
+//        rotateAnimation.fromValue = 0.0
+//        rotateAnimation.toValue = CGFloat(.pi * 2.0)
+//        rotateAnimation.duration = 1.5
+        let rotation = CABasicAnimation(keyPath: "transform.rotation.z")
+        rotation.toValue = NSNumber(value: Double.pi * 2)
+        rotation.duration = 1
+        rotation.repeatCount = Float.greatestFiniteMagnitude;
         
-        customImage.layer.add(rotateAnimation, forKey: nil)
+        customImage.layer.add(rotation, forKey: nil)
         
         refreshControl?.addSubview(customRefreshView)
         
@@ -88,7 +138,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             self.tableView?.reloadData()
             self.refreshControl?.endRefreshing()
         }
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -146,21 +195,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
         let imageURL =  parseManager.listOfImages[indexPath.row].picture
         let url = URL(string: imageURL)
-        
-//        cell.picture.sd_setImage(with: url)
-        // Nuke.loadImage(with: url!, into: cell.imageVi)
-        //    cell.picture.image = #imageLiteral(resourceName: "kudagologo")
-        
-        Alamofire.request(url!).responseImage { response in
-            debugPrint(response)
+        Nuke.Manager.shared.loadImage(with: url!, options: ImageLoadingOptions(
+            placeholder: UIImage(named: "placeholder"),
+            transition: .fadeIn(0.33)
+        ), into: cell.picture)
 
-            if let image = response.result.value {
-                cell.picture.image = image
-            }
-        }
-        cell.clipsToBounds = true
-        cell.selectionStyle = .none
-        
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -184,12 +223,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         } else {
             passPlace = nil
         }
-        
-        
-        print(parseManager.listOfFields[indexPath.row].id)
-        
-        
-        
+
         performSegue(withIdentifier: "detailSegue", sender: self)
     }
     
@@ -222,14 +256,20 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 dvc.eventPrice = passPrice
                 dvc.eventDate = passDate
                 dvc.eventPlace = passPlace
-                
             }
         }
     }
     
     func setNavigationBarAppearance() {
-        UINavigationBar.appearance().shadowImage = UIImage()
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+//        let statusBarHeight = UIApplication.shared.statusBarFrame.size.height
+//        let visualEffectView   = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+//        visualEffectView.frame =  (navigationController?.navigationBar.bounds.insetBy(dx: 0, dy: -(statusBarHeight)).offsetBy(dx: 0, dy: -(statusBarHeight)))!
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = .clear
+//        self.navigationController?.navigationBar.addSubview(visualEffectView)
+//        self.navigationController?.navigationBar.sendSubview(toBack: visualEffectView)
         
         var logo = UIImage(named: "kudagologo")
         logo = logo?.withRenderingMode(.alwaysOriginal)
@@ -245,6 +285,5 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
     }
-
+    
 }
-
