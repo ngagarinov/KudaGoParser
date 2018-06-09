@@ -10,12 +10,8 @@ import UIKit
 import MapKit
 import Nuke
 
-
-
 class DetailViewController: UITableViewController, MKMapViewDelegate {
     
-    var popRecognizer: InteractivePopRecognizer?
-
     var lat: Double?
     var lon: Double?
     var eventId: Int?
@@ -25,28 +21,22 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
     var eventDesc: String?
     var eventTitle: String?
     var eventDetail: String?
-    var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-    var pin:AnnotationPin!
     
-    var parseManager = ParseManager()
-    private var roundButton = UIButton()
+    private var dropShadowEffect = DropShadowEffect()
+    private var popRecognizer: InteractivePopRecognizer?
+    private var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+    private var pin: AnnotationPin!
+    private var parseManager = ParseManager()
+    private var floatButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setTableViewAppearance()
         setInteractiveRecognizer()
-        
-        parseManager.parseKudaGo(request: parseType.detail(id: eventId!).request, parse: .images) {_ in
+        parseManager.getImages(id: eventId! ) {
             self.tableView?.reloadData()
         }
-        
-    }
-    
-    private func setInteractiveRecognizer() {
-        guard let controller = navigationController else { return }
-        popRecognizer = InteractivePopRecognizer(controller: controller)
-        controller.interactivePopGestureRecognizer?.delegate = popRecognizer
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,106 +45,65 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
         setStatusBar()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.isTranslucent = false
-        UIApplication.shared.statusBarStyle = .default
-    }
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 1
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! DetailViewCell
         
-        let countOfImages = parseManager.listOfDetailImages.count
-        cell.pageControl.numberOfPages = countOfImages
+        fillData(in: cell)
         
-        for index in 0..<countOfImages {
-            
-            frame.origin.x = cell.scrollView.frame.size.width * CGFloat(index)
-            frame.size = cell.scrollView.frame.size
-            
-            let imgView = UIImageView(frame: frame)
-            imgView.contentMode = .scaleAspectFill
-            imgView.clipsToBounds = true
-            
-            let url = URL(string:  parseManager.listOfDetailImages[index].picture)
-            Nuke.Manager.shared.loadImage(with:url!, into: imgView)
-            cell.scrollView.addSubview(imgView)
-        }
-        
-        cell.scrollView.contentSize = CGSize(width: (cell.scrollView.frame.size.width * CGFloat(countOfImages)), height: cell.scrollView.frame.size.height)
-        
-        cell.titleLabel.text = eventTitle?.uppercased()
-        cell.descriptionLabel.text = eventDesc
-        cell.detailLabel.text = eventDetail
-        if let place = eventPlace {
-            cell.placeLabel.text = place
-        } else {
-            cell.placeStackView.isHidden = true
-        }
-        cell.dateLabel.text = eventDate
-        cell.priceLabel.text = eventPrice
-        
-        if let latitude = lat, let longitude = lon {
-            cell.mapView.delegate = self
-            let locationCoordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            pin = AnnotationPin(coordinate: locationCoordinates)
-            let zoomSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-            let region = MKCoordinateRegion(center: locationCoordinates, span: zoomSpan)
-            cell.mapView.setRegion(region, animated: true)
-            cell.mapView.addAnnotation(pin)
-        } else {
-            cell.mapView.isHidden = true
-        }
-
         return cell
     }
     
-    func createFloatingButton() {
-
-        roundButton = UIButton(type: .custom)
-        roundButton.translatesAutoresizingMaskIntoConstraints = false
-        roundButton.backgroundColor = .white
-        roundButton.setImage(UIImage(named:"back"), for: .normal)
-        roundButton.addTarget(self, action: #selector(backAction), for: UIControlEvents.touchUpInside)
-        roundButton.layer.cornerRadius = 16
-        roundButton.layer.shadowColor = UIColor.black.cgColor
-        roundButton.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
-        roundButton.layer.masksToBounds = false
-        roundButton.layer.shadowRadius = 4.0
-        roundButton.layer.shadowOpacity = 0.1
-        view.addSubview(roundButton)
-        if #available(iOS 11.0, *) {
-            roundButton.leadingAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
-            roundButton.topAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.topAnchor, constant: 7).isActive = true
-        } else {
-            roundButton.leadingAnchor.constraint(equalTo: tableView.layoutMarginsGuide.leadingAnchor, constant: 8).isActive = true
-            roundButton.topAnchor.constraint(equalTo: tableView.layoutMarginsGuide.topAnchor, constant: 7).isActive = true
-        }
-        roundButton.widthAnchor.constraint(equalToConstant: 48).isActive = true
-        roundButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
-
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let annotationView = MKAnnotationView(annotation: pin, reuseIdentifier: "pinMap")
+        annotationView.image = UIImage(named: "pin_map")
+        
+        return annotationView
     }
     
-    func setStatusBar() {
+}
 
-        if let statusbar = UIApplication.shared.value(forKey: "statusBar") as? UIView {
-            statusbar.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4)
+extension DetailViewController {
+    
+    @objc func getDirectionsAction() {
+        if let latitude = lat, let longitude = lon {
+            let locationCoordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let placemark = MKPlacemark(
+                coordinate: locationCoordinates,
+                addressDictionary: nil
+            )
+            let mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = eventPlace
+            let options = [
+                MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+            ]
+            MKMapItem.openMaps(with: [mapItem], launchOptions: options)
         }
+    }
+    
+    @objc func backAction() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    private func setTableViewAppearance() {
+        tableView?.estimatedRowHeight = 231
+        tableView?.rowHeight = UITableViewAutomaticDimension
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.allowsSelection = false
+    }
+    
+    private func setStatusBar() {
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.regular)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.translatesAutoresizingMaskIntoConstraints = false
@@ -169,26 +118,80 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
         }
     }
     
-    func setTableViewAppearance() {
-        tableView?.estimatedRowHeight = 231
-        tableView?.rowHeight = UITableViewAutomaticDimension
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.allowsSelection = false
+    
+    private func createFloatingButton() {
+        floatButton = UIButton(type: .custom)
+        floatButton.translatesAutoresizingMaskIntoConstraints = false
+        floatButton.backgroundColor = .white
+        floatButton.setImage(UIImage(named:"back"), for: .normal)
+        floatButton.addTarget(self, action: #selector(backAction), for: UIControlEvents.touchUpInside)
+        dropShadowEffect.setupProperties(view: floatButton, cornerRadius: 16, shadowRadius: 4, widthOffset: 0, heightOffset: 2)
+        view.addSubview(floatButton)
+        if #available(iOS 11.0, *) {
+            floatButton.leadingAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
+            floatButton.topAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.topAnchor, constant: 7).isActive = true
+        } else {
+            floatButton.leadingAnchor.constraint(equalTo: tableView.layoutMarginsGuide.leadingAnchor, constant: 8).isActive = true
+            floatButton.topAnchor.constraint(equalTo: tableView.layoutMarginsGuide.topAnchor, constant: 7).isActive = true
+        }
+        floatButton.widthAnchor.constraint(equalToConstant: 48).isActive = true
+        floatButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
     }
     
-    @objc func backAction() {
-        navigationController?.popViewController(animated: true)
+    private func fillData(in cell: DetailViewCell) {
         
-    }
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let annotationView = MKAnnotationView(annotation: pin, reuseIdentifier: "pinMap")
-        annotationView.image = UIImage(named: "pin_map")
+        // Создаем карусель картинок
+        let countOfImages = parseManager.listOfDetailImages.count
+        cell.pageControl.numberOfPages = countOfImages
+        for index in 0..<countOfImages {
+            frame.origin.x = cell.scrollView.frame.size.width * CGFloat(index)
+            frame.size = cell.scrollView.frame.size
+            
+            let imgView = UIImageView(frame: frame)
+            imgView.contentMode = .scaleAspectFill
+            imgView.clipsToBounds = true
+            
+            let url = URL(string:  parseManager.listOfDetailImages[index].picture)
+            Nuke.loadImage(with: url!, options: ImageLoadingOptions(
+                placeholder: UIImage(named: "not_found"),
+                transition: .fadeIn(duration: 0.33)), into: imgView)
+            cell.scrollView.addSubview(imgView)
+        }
+        cell.scrollView.contentSize = CGSize(width: (cell.scrollView.frame.size.width * CGFloat(countOfImages)), height: cell.scrollView.frame.size.height)
         
-        return annotationView
+        // Отображаем данные, полученные с предыдущего VC
+        cell.titleLabel.text = eventTitle?.uppercased()
+        cell.descriptionLabel.text = eventDesc
+        cell.detailLabel.text = eventDetail
+        if let place = eventPlace {
+            cell.placeLabel.text = place
+        } else {
+            cell.placeStackView.isHidden = true
+        }
+        cell.dateLabel.text = eventDate
+        cell.priceLabel.text = eventPrice
+        
+        // Отображаем место на карте, если место вернулось с API
+        if let latitude = lat, let longitude = lon {
+            cell.getDirectionsButton.addTarget(self, action: #selector(getDirectionsAction), for: UIControlEvents.touchUpInside)
+            cell.mapView.delegate = self
+            let locationCoordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            pin = AnnotationPin(coordinate: locationCoordinates)
+            let zoomSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            let region = MKCoordinateRegion(center: locationCoordinates, span: zoomSpan)
+            cell.mapView.setRegion(region, animated: true)
+            cell.mapView.addAnnotation(pin)
+        } else {
+            cell.mapView.isHidden = true
+            cell.getDirectionsButton.isHidden = true
+        }
     }
     
+    private func setInteractiveRecognizer() {
+        guard let controller = navigationController else { return }
+        popRecognizer = InteractivePopRecognizer(controller: controller)
+        controller.interactivePopGestureRecognizer?.delegate = popRecognizer
+    }
 }
 
 

@@ -29,13 +29,7 @@ class TableViewCell: UITableViewCell {
         
         roundView.layer.masksToBounds = true
         roundView.layer.cornerRadius = 16
-//        shadowView.layer.cornerRadius = 16
-//        shadowView.layer.shadowColor = UIColor.black.cgColor
-//        shadowView.layer.shadowRadius = 12
-//        shadowView.layer.shadowOpacity = 0.2
-//        shadowView.layer.shadowOffset = CGSize(width:0, height: 0)
-//        shadowView.layer.masksToBounds = false
+
     }
     
-
 }

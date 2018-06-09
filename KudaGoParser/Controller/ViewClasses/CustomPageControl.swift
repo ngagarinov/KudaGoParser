@@ -39,7 +39,6 @@ class CustomImagePageControl: UIPageControl {
                 imageView = existingImageview
             } else {
                 imageView = UIImageView(image: inactiveImage)
-                
                 imageView.center = subview.center
                 subview.addSubview(imageView)
                 subview.clipsToBounds = false
