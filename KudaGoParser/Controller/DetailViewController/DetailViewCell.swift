@@ -23,8 +23,6 @@ class DetailViewCell: UITableViewCell,UIScrollViewDelegate {
     @IBOutlet weak var placeStackView: UIStackView!
     @IBOutlet weak var getDirectionsButton: UIButton!
     
-    private var dropShadowEffect = DropShadowEffect()
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -45,7 +43,7 @@ class DetailViewCell: UITableViewCell,UIScrollViewDelegate {
         getDirectionsButton.backgroundColor = .white
         getDirectionsButton.setTitle("Проложить маршрут", for: .normal)
         getDirectionsButton.tintColor = .customRed()
-        dropShadowEffect.setupProperties(view: getDirectionsButton, cornerRadius: 16, shadowRadius: 4, widthOffset: 0, heightOffset: 2)
+        DropShadowEffect.setupProperties(view: getDirectionsButton, cornerRadius: 16, shadowRadius: 4, widthOffset: 0, heightOffset: 2)
     }
 
 }

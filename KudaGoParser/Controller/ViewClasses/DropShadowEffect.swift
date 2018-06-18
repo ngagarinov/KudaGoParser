@@ -10,7 +10,7 @@ import UIKit
 
 class DropShadowEffect {
     
-    func setupProperties(view: UIView, cornerRadius: CGFloat, shadowRadius: CGFloat, widthOffset: Double, heightOffset: Double) {
+    class func setupProperties(view: UIView, cornerRadius: CGFloat, shadowRadius: CGFloat, widthOffset: Double, heightOffset: Double) {
     view.layer.cornerRadius = cornerRadius
     view.layer.shadowColor = UIColor.black.cgColor
     view.layer.shadowOffset = CGSize(width: widthOffset, height: heightOffset)

@@ -22,7 +22,6 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
     var eventTitle: String?
     var eventDetail: String?
     
-    private var dropShadowEffect = DropShadowEffect()
     private var popRecognizer: InteractivePopRecognizer?
     private var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
     private var pin: AnnotationPin!
@@ -125,7 +124,7 @@ extension DetailViewController {
         floatButton.backgroundColor = .white
         floatButton.setImage(UIImage(named:"back"), for: .normal)
         floatButton.addTarget(self, action: #selector(backAction), for: UIControlEvents.touchUpInside)
-        dropShadowEffect.setupProperties(view: floatButton, cornerRadius: 16, shadowRadius: 4, widthOffset: 0, heightOffset: 2)
+        DropShadowEffect.setupProperties(view: floatButton, cornerRadius: 16, shadowRadius: 4, widthOffset: 0, heightOffset: 2)
         view.addSubview(floatButton)
         if #available(iOS 11.0, *) {
             floatButton.leadingAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
