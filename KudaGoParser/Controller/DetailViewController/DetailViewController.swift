@@ -25,7 +25,7 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
     private var popRecognizer: InteractivePopRecognizer?
     private var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
     private var pin: AnnotationPin!
-    private var parseManager = ParseManager()
+    private var eventsService = EventsService()
     private var floatButton = UIButton()
     
     override func viewDidLoad() {
@@ -33,7 +33,7 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
         
         setTableViewAppearance()
         setInteractiveRecognizer()
-        parseManager.getImages(id: eventId! ) {
+        eventsService.getImages(id: eventId! ) {
             self.tableView?.reloadData()
         }
     }
@@ -140,7 +140,7 @@ extension DetailViewController {
     private func fillData(in cell: DetailViewCell) {
         
         // Создаем карусель картинок
-        let countOfImages = parseManager.listOfDetailImages.count
+        let countOfImages = eventsService.listOfDetailImages.count
         cell.pageControl.numberOfPages = countOfImages
         for index in 0..<countOfImages {
             frame.origin.x = cell.scrollView.frame.size.width * CGFloat(index)
@@ -150,7 +150,7 @@ extension DetailViewController {
             imgView.contentMode = .scaleAspectFill
             imgView.clipsToBounds = true
             
-            let url = URL(string:  parseManager.listOfDetailImages[index].picture)
+            let url = URL(string:  eventsService.listOfDetailImages[index].picture)
             Nuke.loadImage(with: url!, options: ImageLoadingOptions(
                 placeholder: UIImage(named: "not_found"),
                 transition: .fadeIn(duration: 0.33)), into: imgView)

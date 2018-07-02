@@ -53,9 +53,9 @@ class CustomImagePageControl: UIPageControl {
         } else {
             let view = view.subviews.first { (view) -> Bool in
                 return view is UIImageView
-                } as? UIImageView
+                }
             
-            return view
+            return view as? UIImageView
         }
     }
 }

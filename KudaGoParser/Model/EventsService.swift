@@ -8,22 +8,23 @@
 
 import UIKit
 
-class ParseManager {
+class EventsService {
     
-    var listOfFields = [ResultStruct]()
-    var listOfAddress = [PlaceStruct]()
-    var listOfImages = [SizeStruct]()
-    var listOfDates = [DatesStruct]()
-    var listOfDetailImages = [SizeStruct]()
-    var listOfCoords = [CoordsStruct]()
-    var listOfCities = [CitiesStruct]()
+    var listOfFields = [Result]()
+    var listOfAddress = [Place]()
+    var listOfImages = [Size]()
+    var listOfDates = [Dates]()
+    var listOfDetailImages = [Size]()
+    var listOfCoords = [Coords]()
+    var listOfCities = [Cities]()
+    
     private var listOfStart = [Double]()
     private var listOfEnd = [Double]()
     
-    func JSONTaskWith(request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+    func jsonTaskWith(request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
         
-        let sessionConf = URLSessionConfiguration.default
-        let session = URLSession(configuration: sessionConf)
+        let sessionConfiguration = URLSessionConfiguration.default
+        let session = URLSession(configuration: sessionConfiguration)
         var request = request
         request.httpMethod = "GET"
         
@@ -48,13 +49,13 @@ class ParseManager {
     
     func getEvents(currentDate: Double, location: String, completion: @escaping() -> ()) {
         
-        let request = parseType.events(currentDate: currentDate, location: location).request
+        let request = ParseType.events(currentDate: currentDate, location: location).request
         
-        JSONTaskWith(request: request) { (data, request, error) in
+        jsonTaskWith(request: request) { (data, request, error) in
             
             guard let data = data else { return }
             do {
-                let eventJSON = try JSONDecoder().decode(EventsStruct.self, from: data)
+                let eventJSON = try JSONDecoder().decode(Events.self, from: data)
                 self.parseEvents(array: eventJSON)
                 
                 DispatchQueue.main.async {
@@ -68,12 +69,12 @@ class ParseManager {
     
     func getImages(id: Int, completion: @escaping() -> ()) {
         
-        let request = parseType.detail(id: id).request
+        let request = ParseType.detail(id: id).request
         
-        JSONTaskWith(request: request) { (data, request, error) in
+        jsonTaskWith(request: request) { (data, request, error) in
             guard let data = data else { return }
             do {
-                let imagesJSON = try JSONDecoder().decode(DetailImagesStruct.self, from: data)
+                let imagesJSON = try JSONDecoder().decode(DetailImages.self, from: data)
                 self.parseImages(array: imagesJSON)
                 
                 DispatchQueue.main.async {
@@ -87,12 +88,12 @@ class ParseManager {
     
     func getCities() {
     
-        let request = parseType.cities.request
+        let request = ParseType.cities.request
         
-        JSONTaskWith(request: request) { (data, request, error) in
+        jsonTaskWith(request: request) { (data, request, error) in
             guard let data = data else { return }
             do {
-                let citiesJSON = try JSONDecoder().decode([CitiesStruct].self, from: data)
+                let citiesJSON = try JSONDecoder().decode([Cities].self, from: data)
                 self.parseCities(array: citiesJSON)
                 
             } catch let jsonErr as NSError {
@@ -103,14 +104,14 @@ class ParseManager {
     
     func getPullToRefresh(currentDate: Double, location: String, completion: @escaping() -> ()) {
         
-        let request = parseType.events(currentDate: currentDate, location: location).request
+        let request = ParseType.events(currentDate: currentDate, location: location).request
         
-        JSONTaskWith(request: request) { (data, request, error) in
+        jsonTaskWith(request: request) { (data, request, error) in
             guard let data = data else { return }
             do {
                 
                 self.clearData()
-                let eventJSON = try JSONDecoder().decode(EventsStruct.self, from: data)
+                let eventJSON = try JSONDecoder().decode(Events.self, from: data)
                 self.parseEvents(array: eventJSON)
                 
                 DispatchQueue.main.async {
@@ -124,12 +125,12 @@ class ParseManager {
    
     func getPagination(currentDate: Double, location: String, page: Int, completion: @escaping() -> ()) {
         
-        let request = parseType.pages(page: page, currentDate: currentDate, location: location).request
+        let request = ParseType.pages(page: page, currentDate: currentDate, location: location).request
         
-        JSONTaskWith(request: request) { (data, request, error) in
+        jsonTaskWith(request: request) { (data, request, error) in
             do {
                 guard let data = data else { return }
-                let eventJSON = try JSONDecoder().decode(EventsStruct.self, from: data)
+                let eventJSON = try JSONDecoder().decode(Events.self, from: data)
                 self.parseEvents(array: eventJSON)
                 
                 DispatchQueue.main.async {
@@ -150,7 +151,7 @@ class ParseManager {
         listOfDetailImages.removeAll()
     }
     
-    private func parseEvents(array: EventsStruct ) {
+    private func parseEvents(array: Events ) {
         
         for eachElement in array.results {
             let id = eachElement.id
@@ -166,7 +167,7 @@ class ParseManager {
             let images = eachElement.images
             for eachImage in images {
                 let picture = eachImage.thumbnails.picture
-                self.listOfImages.append(SizeStruct(picture: picture))
+                self.listOfImages.append(Size(picture: picture))
                 break
             }
             let dates = eachElement.dates
@@ -176,29 +177,29 @@ class ParseManager {
                 let end = eachDates.end
                 self.listOfEnd.append(end)
             }
-            self.listOfDates.append(DatesStruct(start: self.listOfStart.first!, end: self.listOfEnd.last!))
+            self.listOfDates.append(Dates(start: self.listOfStart.first!, end: self.listOfEnd.last!))
             self.listOfStart.removeAll()
             self.listOfEnd.removeAll()
-            self.listOfFields.append(ResultStruct(id: id,title: title, description: description,place: place, price: price, images: images, dates: dates,bodyText: bodyText))
-            self.listOfAddress.append(PlaceStruct(address: address, coords: coords))
-            self.listOfCoords.append(CoordsStruct(lat: lat, lon: lon))
+            self.listOfFields.append(Result(id: id,title: title, description: description,place: place, price: price, images: images, dates: dates,bodyText: bodyText))
+            self.listOfAddress.append(Place(address: address, coords: coords))
+            self.listOfCoords.append(Coords(lat: lat, lon: lon))
         }
         
     }
     
-    private func parseImages(array: DetailImagesStruct) {
+    private func parseImages(array: DetailImages) {
         
         for eachElement in array.images {
             let image = eachElement.thumbnails.picture
-            self.listOfDetailImages.append(SizeStruct(picture: image))
+            self.listOfDetailImages.append(Size(picture: image))
         }
     }
     
-    private func parseCities( array: [CitiesStruct]) {
+    private func parseCities( array: [Cities]) {
         for eachElement in array {
             let name = eachElement.name
             let slug = eachElement.slug
-            self.listOfCities.append(CitiesStruct(name: name, slug: slug))
+            self.listOfCities.append(Cities(name: name, slug: slug))
         }
     }
     

@@ -9,7 +9,7 @@
 import UIKit
 
 class NoConnectionViewController: UIViewController {
-
+    
     @IBOutlet weak var reconnectButton: UIButton!
     @IBOutlet weak var navBarView: UIView!
     @IBOutlet weak var titleLabel: UILabel!

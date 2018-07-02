@@ -9,7 +9,7 @@
 import UIKit
 
 class TableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var placeStackView: UIStackView!
     @IBOutlet weak var priceImage: UIImageView!
@@ -29,7 +29,7 @@ class TableViewCell: UITableViewCell {
         
         roundView.layer.masksToBounds = true
         roundView.layer.cornerRadius = 16
-
+        
     }
     
 }

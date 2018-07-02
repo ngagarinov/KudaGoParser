@@ -9,7 +9,7 @@
 import UIKit
 import Nuke
 
-class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, CitiesVCDelegate {
+class EventViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, CitiesVCDelegate {
     
     @IBOutlet weak var cityButton: UIButton!
     @IBOutlet weak var cityButtonRightConstraint: NSLayoutConstraint!
@@ -29,7 +29,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     var passPrice: String?
     var passDate: String?
     
-    private var parseManager = ParseManager()
+    private var eventsService = EventsService()
     private var page = 1
     private var locationSlug = "msk"
     private var locationName = "Москва"
@@ -59,13 +59,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             setPullToRefresh()
             cityButton.setTitleColor(.customRed(), for: .normal)
             
-            parseManager.getEvents(currentDate: currentDate, location: locationSlug) {
+            eventsService.getEvents(currentDate: currentDate, location: locationSlug) {
                 self.tableView?.reloadData()
                 self.spinner?.stopAnimating()
                 self.tableView.isHidden = false
                 self.imitateNavBarView.isHidden = false
             }
-            parseManager.getCities()
+            eventsService.getCities()
         }
     }
     
@@ -74,15 +74,15 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         if !Connectivity.isConnectedToInternet() {
             showOfflinePage()
         } else {
-        if tableView.contentOffset.y > 20 {
-            navigationController?.setNavigationBarHidden(false, animated: true)
-        } else {
-            navigationController?.setNavigationBarHidden(true, animated: false)
-        }
-        setNavigationBarAppearance()
-        refreshContent.startAnimation()
-        setNavBarRightItem()
-        cityButton.setTitle(locationName, for: .normal)
+            if tableView.contentOffset.y > 20 {
+                navigationController?.setNavigationBarHidden(false, animated: true)
+            } else {
+                navigationController?.setNavigationBarHidden(true, animated: false)
+            }
+            setNavigationBarAppearance()
+            refreshContent.startAnimation()
+            setNavBarRightItem()
+            cityButton.setTitle(locationName, for: .normal)
         }
     }
     
@@ -96,7 +96,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return parseManager.listOfFields.count
+        return eventsService.listOfFields.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -110,10 +110,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        if indexPath.row == parseManager.listOfFields.count - 1 {
+        if indexPath.row == eventsService.listOfFields.count - 1 {
             page += 1
             
-            parseManager.getPagination(currentDate: currentDate, location: locationSlug, page: page) {
+            eventsService.getPagination(currentDate: currentDate, location: locationSlug, page: page) {
                 self.tableView?.reloadData()
             }
         }
@@ -137,15 +137,15 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         if segue.identifier == "detailSegue" {
             if let indexPath  = tableView.indexPathForSelectedRow {
                 let dvc = segue.destination  as! DetailViewController
-                let id = parseManager.listOfFields[indexPath.row].id
-                if let bodyText = parseManager.listOfFields[indexPath.row].bodyText {
+                let id = eventsService.listOfFields[indexPath.row].id
+                if let bodyText = eventsService.listOfFields[indexPath.row].bodyText {
                     dvc.eventDetail = bodyText
                 } else {
                     dvc.eventDetail = "net"
                 }
-                let desc = parseManager.listOfFields[indexPath.row].description
-                let title = parseManager.listOfFields[indexPath.row].title
-                if let latitude = parseManager.listOfCoords[indexPath.row].lat, let longitude = parseManager.listOfCoords[indexPath.row].lon {
+                let desc = eventsService.listOfFields[indexPath.row].description
+                let title = eventsService.listOfFields[indexPath.row].title
+                if let latitude = eventsService.listOfCoords[indexPath.row].lat, let longitude = eventsService.listOfCoords[indexPath.row].lon {
                     dvc.lat = latitude
                     dvc.lon = longitude
                 } else {
@@ -162,10 +162,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
         
         if segue.identifier == "citySegue" {
-                let cvc = segue.destination as! CitiesViewController
-                let cities = parseManager.listOfCities
-                cvc.cities = cities
-                cvc.slug = locationSlug
+            let cvc = segue.destination as! CitiesViewController
+            let cities = eventsService.listOfCities
+            cvc.cities = cities
+            cvc.slug = locationSlug
         }
         
         if let destination = segue.destination as? CitiesViewController{
@@ -181,7 +181,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             spinner?.startAnimating()
             tableView.isHidden = true
             imitateNavBarView.isHidden = true
-            parseManager.getEvents(currentDate: currentDate, location: locationSlug) {
+            eventsService.getEvents(currentDate: currentDate, location: locationSlug) {
                 self.tableView?.reloadData()
                 self.spinner?.stopAnimating()
                 self.tableView.isHidden = false
@@ -233,11 +233,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-         tableView.contentOffset.y = 0
+        tableView.contentOffset.y = 0
     }
 }
 
-extension ViewController {
+extension EventViewController {
     
     @objc func performCitySegue() {
         performSegue(withIdentifier: "citySegue", sender: self)
@@ -249,13 +249,13 @@ extension ViewController {
             showOfflinePage()
         } else {
             page = 1
-            parseManager.getPullToRefresh(currentDate: currentDate, location: locationSlug) {
+            eventsService.getPullToRefresh(currentDate: currentDate, location: locationSlug) {
                 self.tableView?.reloadData()
                 self.tableViewRefreshControl.endRefreshing()
             }
         }
     }
-
+    
     private func createLoader() {
         spinner = MyIndicator(frame: CGRect(x: 0, y: 0 , width: 32, height: 32), image: UIImage(named: "loader")!)
         spinner?.center = self.view.center
@@ -271,12 +271,12 @@ extension ViewController {
     
     private func clearObject() {
         page = 1
-        parseManager.listOfFields.removeAll()
-        parseManager.listOfDates.removeAll()
-        parseManager.listOfAddress.removeAll()
-        parseManager.listOfImages.removeAll()
-        parseManager.listOfCoords.removeAll()
-        parseManager.listOfDetailImages.removeAll()
+        eventsService.listOfFields.removeAll()
+        eventsService.listOfDates.removeAll()
+        eventsService.listOfAddress.removeAll()
+        eventsService.listOfImages.removeAll()
+        eventsService.listOfCoords.removeAll()
+        eventsService.listOfDetailImages.removeAll()
     }
     
     private func showOfflinePage() -> Void {
@@ -289,23 +289,23 @@ extension ViewController {
     }
     
     private func fillData(in cell: TableViewCell, indexPath: IndexPath) {
-        cell.titleLabel.text = parseManager.listOfFields[indexPath.row].title.uppercased()
-        cell.descriptionLabel.text = parseManager.listOfFields[indexPath.row].description
-        let price = parseManager.listOfFields[indexPath.row].price
+        cell.titleLabel.text = eventsService.listOfFields[indexPath.row].title.uppercased()
+        cell.descriptionLabel.text = eventsService.listOfFields[indexPath.row].description
+        let price = eventsService.listOfFields[indexPath.row].price
         if  price == ""{
             cell.priceLabel.text = "Бесплатно"
         } else {
             cell.priceLabel.text = price
         }
-        if let place = parseManager.listOfAddress[indexPath.row].address {
+        if let place = eventsService.listOfAddress[indexPath.row].address {
             cell.placeLabel.text = place
             cell.placeStackView.isHidden = false
         } else {
             cell.placeStackView.isHidden = true
         }
         
-        let startUnixDate = parseManager.listOfDates[indexPath.row].start
-        let endUnixDate = parseManager.listOfDates[indexPath.row].end
+        let startUnixDate = eventsService.listOfDates[indexPath.row].start
+        let endUnixDate = eventsService.listOfDates[indexPath.row].end
         let startDate = Date(timeIntervalSince1970: startUnixDate )
         let endDate = Date(timeIntervalSince1970: endUnixDate)
         var calendar = Calendar.current
@@ -326,7 +326,7 @@ extension ViewController {
             cell.dateLabel.text = dateFormatter.string(from: startDate) + " - " + dateFormatter.string(from: endDate)
         }
         
-        let imageURL =  parseManager.listOfImages[indexPath.row].picture
+        let imageURL =  eventsService.listOfImages[indexPath.row].picture
         let url = URL(string: imageURL)
         Nuke.loadImage(with: url!, options: ImageLoadingOptions(
             placeholder: UIImage(named: "not_found"),

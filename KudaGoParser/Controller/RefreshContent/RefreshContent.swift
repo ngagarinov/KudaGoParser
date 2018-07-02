@@ -13,15 +13,6 @@ class RefreshContent: UIView {
     var rotation: CABasicAnimation?
     @IBOutlet weak var loader: UIImageView!
     
-//    func createRotation() {
-//        rotation = CABasicAnimation(keyPath: "transform.rotation.z")
-//        rotation?.toValue = NSNumber(value: Double.pi * 2)
-//        rotation?.duration = 1
-//        rotation?.isCumulative = true
-//        rotation?.repeatCount = Float.greatestFiniteMagnitude
-//        loader.layer.add(rotation!, forKey: "rotationAnimation")
-//    }
-    
     func startAnimation() {
         rotation = CABasicAnimation(keyPath: "transform.rotation.z")
         rotation?.toValue = NSNumber(value: Double.pi * 2)
@@ -34,7 +25,6 @@ class RefreshContent: UIView {
     
     func stopAnimation() {
         self.loader.layer.removeAnimation(forKey: "rotationAnimation")
-        //loader.isHidden = true
     }
     
     

@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 class DetailViewCell: UITableViewCell,UIScrollViewDelegate {
-
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -30,7 +30,7 @@ class DetailViewCell: UITableViewCell,UIScrollViewDelegate {
         scrollView.delegate = self
         
         setupGetDirectionsButtonAppearance()
-
+        
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -45,5 +45,5 @@ class DetailViewCell: UITableViewCell,UIScrollViewDelegate {
         getDirectionsButton.tintColor = .customRed()
         DropShadowEffect.setupProperties(view: getDirectionsButton, cornerRadius: 16, shadowRadius: 4, widthOffset: 0, heightOffset: 2)
     }
-
+    
 }

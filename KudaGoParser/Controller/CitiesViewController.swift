@@ -13,16 +13,16 @@ protocol CitiesVCDelegate {
 }
 
 class CitiesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
     @IBOutlet weak var tableView: UITableView!
-    var cities = [CitiesStruct]()
+    var cities = [Cities]()
     var slug: String?
     var cityName: String?
     var delegate: CitiesVCDelegate?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         title = "Выбор города"
         tableView.delegate = self
         tableView.dataSource = self
@@ -37,7 +37,7 @@ class CitiesViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if let slug = slug, let cityName = cityName {
-        delegate?.finishPassing(slug: slug, name: cityName)
+            delegate?.finishPassing(slug: slug, name: cityName)
         }
     }
     
@@ -50,7 +50,7 @@ class CitiesViewController: UIViewController, UITableViewDataSource, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
         
         fillData(in: cell!, indexPath: indexPath)
-
+        
         return cell!
     }
     
