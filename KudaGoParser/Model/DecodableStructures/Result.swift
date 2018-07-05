@@ -22,4 +22,15 @@ struct Result: Decodable {
         case id, title, description, place, price, images, dates
         case bodyText = "body_text"
     }
+    
+    init(id: Int, title: String, description: String, place: Place?, price: String, images: [Image], dates: [Dates], bodyText: String?) {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.place = place
+        self.price = price
+        self.images = images
+        self.dates = dates
+        self.bodyText = bodyText
+    }
 }

@@ -173,8 +173,8 @@ class EventsService {
             let dates = eachElement.dates
             for eachDates in dates {
                 let start = eachDates.start
-                self.listOfStart.append(start)
                 let end = eachDates.end
+                self.listOfStart.append(start)
                 self.listOfEnd.append(end)
             }
             self.listOfDates.append(Dates(start: self.listOfStart.first!, end: self.listOfEnd.last!))

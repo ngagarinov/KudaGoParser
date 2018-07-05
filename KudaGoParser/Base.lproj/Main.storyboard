@@ -31,7 +31,7 @@
         <!--Cities View Controller-->
         <scene sceneID="8xx-80-UMm">
             <objects>
-                <viewController id="abb-VC-9kT" customClass="CitiesViewController" customModule="KudaGoParser" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CitiesVC" id="abb-VC-9kT" customClass="CitiesViewController" customModule="KudaGoParser" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jgj-C2-eVo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -77,10 +77,10 @@
             </objects>
             <point key="canvasLocation" x="1812" y="-815"/>
         </scene>
-        <!--View Controller-->
+        <!--Event View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="KudaGoParser" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="EventViewController" customModule="KudaGoParser" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

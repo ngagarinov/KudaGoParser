@@ -46,6 +46,7 @@
 		5FECD2C420EA2CD00077A007 /* Coords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FECD2C320EA2CD00077A007 /* Coords.swift */; };
 		5FECD2C620EA2CDB0077A007 /* DetailImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FECD2C520EA2CDB0077A007 /* DetailImages.swift */; };
 		5FECD2C820EA2CE20077A007 /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FECD2C720EA2CE20077A007 /* Cities.swift */; };
+		5FECD2CA20EDF8AF0077A007 /* EventsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FECD2C920EDF8AF0077A007 /* EventsDataModel.swift */; };
 		5FF09D9920C51F4B00AF74B6 /* CitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF09D9820C51F4B00AF74B6 /* CitiesViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +91,7 @@
 		5FECD2C320EA2CD00077A007 /* Coords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coords.swift; sourceTree = "<group>"; };
 		5FECD2C520EA2CDB0077A007 /* DetailImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImages.swift; sourceTree = "<group>"; };
 		5FECD2C720EA2CE20077A007 /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
+		5FECD2C920EDF8AF0077A007 /* EventsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsDataModel.swift; sourceTree = "<group>"; };
 		5FF09D9820C51F4B00AF74B6 /* CitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesViewController.swift; sourceTree = "<group>"; };
 		82173B61C174347F25878969 /* Pods-KudaGoParser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KudaGoParser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KudaGoParser/Pods-KudaGoParser.debug.xcconfig"; sourceTree = "<group>"; };
 		8B1961C9338FA6E5D2C40985 /* Pods-KudaGoParser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KudaGoParser.release.xcconfig"; path = "Pods/Target Support Files/Pods-KudaGoParser/Pods-KudaGoParser.release.xcconfig"; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 			children = (
 				5FECD2B820EA2BDA0077A007 /* DecodableStructures */,
 				5FA5E82320A9A9FE0036F92A /* UrlRequest.swift */,
+				5FECD2C920EDF8AF0077A007 /* EventsDataModel.swift */,
 				5FA5E82120A9A8B50036F92A /* EventsService.swift */,
 			);
 			path = Model;
@@ -406,6 +409,7 @@
 				5FA5E82220A9A8B50036F92A /* EventsService.swift in Sources */,
 				5FA5E80C20A9650C0036F92A /* EventViewController.swift in Sources */,
 				5FECD2C820EA2CE20077A007 /* Cities.swift in Sources */,
+				5FECD2CA20EDF8AF0077A007 /* EventsDataModel.swift in Sources */,
 				5F5C96DA20BC74D400114570 /* CustomPageControl.swift in Sources */,
 				5FF09D9920C51F4B00AF74B6 /* CitiesViewController.swift in Sources */,
 				5FAB2F6020C15B4400BB8021 /* RefreshContent.swift in Sources */,

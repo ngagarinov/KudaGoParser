@@ -92,7 +92,7 @@ class EventViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     @IBAction func cityButtonTapped(_ sender: Any) {
-        performCitySegue()
+        goToCityVC()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -240,7 +240,7 @@ class EventViewController: UIViewController,UITableViewDelegate,UITableViewDataS
 extension EventViewController {
     
     @objc func performCitySegue() {
-        performSegue(withIdentifier: "citySegue", sender: self)
+        goToCityVC()
     }
     
     @objc func pullToRefresh () {
@@ -254,6 +254,22 @@ extension EventViewController {
                 self.tableViewRefreshControl.endRefreshing()
             }
         }
+    }
+    
+    private func goToCityVC() {
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyBoard.instantiateViewController(withIdentifier: "CitiesVC") as! CitiesViewController
+        
+        let navigationController = self.navigationController
+        
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionMoveIn
+        transition.subtype = kCATransitionFromTop
+        navigationController?.view.layer.add(transition, forKey: nil)
+        navigationController?.pushViewController(vc, animated: false)
     }
     
     private func createLoader() {
