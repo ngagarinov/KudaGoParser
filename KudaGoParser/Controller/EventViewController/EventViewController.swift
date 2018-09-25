@@ -9,7 +9,9 @@
 import UIKit
 import Nuke
 
-class EventViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, CitiesVCDelegate {
+class EventViewController: UIViewController, CitiesVCDelegate {
+    
+    // MARK: IBOutlets
     
     @IBOutlet weak var cityButton: UIButton!
     @IBOutlet weak var cityButtonRightConstraint: NSLayoutConstraint!
@@ -24,6 +26,14 @@ class EventViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var tableTitle: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    // MARK: IBActions
+    
+    @IBAction func cityButtonTapped(_ sender: Any) {
+        goToCityVC()
+    }
+    
+    // MARK: Properties
+    
     var passId: Int?
     var passPlace: String? 
     var passPrice: String?
@@ -36,7 +46,7 @@ class EventViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     private let currentDate = Date().timeIntervalSince1970
     private var visualEffectView: UIVisualEffectView?
     private var refreshControl: UIRefreshControl?
-    private var spinner: MyIndicator?
+    private var spinner: CustomIndicator?
     private var refreshContent: RefreshContent!
     private var tableViewRefreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -45,6 +55,8 @@ class EventViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         return refreshControl
     }()
+    
+    // MARK: EventViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +83,7 @@ class EventViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         if !Connectivity.isConnectedToInternet() {
             showOfflinePage()
         } else {
@@ -89,48 +102,6 @@ class EventViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
-    }
-    
-    @IBAction func cityButtonTapped(_ sender: Any) {
-        goToCityVC()
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return eventsService.listOfFields.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableViewCell
-        
-        fillData(in: cell, indexPath: indexPath)
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        if indexPath.row == eventsService.listOfFields.count - 1 {
-            page += 1
-            
-            eventsService.getPagination(currentDate: currentDate, location: locationSlug, page: page) {
-                self.tableView?.reloadData()
-            }
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! TableViewCell
-        
-        passPrice = cell.priceLabel.text
-        passDate = cell.dateLabel.text
-        if !cell.placeStackView.isHidden {
-            passPlace = cell.placeLabel.text
-        } else {
-            passPlace = nil
-        }
-        
-        performSegue(withIdentifier: "detailSegue", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -186,6 +157,7 @@ class EventViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 self.spinner?.stopAnimating()
                 self.tableView.isHidden = false
                 self.imitateNavBarView.isHidden = false
+                self.scrollTableToTop()
             }
         }
     }
@@ -237,6 +209,57 @@ class EventViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
 }
 
+//MARK: UITableViewDataSource
+
+extension EventViewController: UITableViewDataSource  {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return eventsService.listOfFields.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableViewCell
+        
+        fillData(in: cell, indexPath: indexPath)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        if indexPath.row == eventsService.listOfFields.count - 1 {
+            page += 1
+            
+            eventsService.getPagination(currentDate: currentDate, location: locationSlug, page: page) {
+                self.tableView?.reloadData()
+            }
+        }
+    }
+}
+
+//MARK: UITableViewDelegate
+
+extension EventViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! TableViewCell
+        
+        passPrice = cell.priceLabel.text
+        passDate = cell.dateLabel.text
+        if !cell.placeStackView.isHidden {
+            passPlace = cell.placeLabel.text
+        } else {
+            passPlace = nil
+        }
+        
+        performSegue(withIdentifier: "detailSegue", sender: self)
+    }
+    
+}
+
+//MARK: EventViewController extenstion
+
 extension EventViewController {
     
     @objc func performCitySegue() {
@@ -256,24 +279,17 @@ extension EventViewController {
         }
     }
     
+    //MARK: Private helpers
+    
     private func goToCityVC() {
         
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyBoard.instantiateViewController(withIdentifier: "CitiesVC") as! CitiesViewController
+        imitateNavBarView.isHidden = true
+        self.performSegue(withIdentifier: "citySegue", sender: self)
         
-        let navigationController = self.navigationController
-        
-        let transition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        transition.type = kCATransitionMoveIn
-        transition.subtype = kCATransitionFromTop
-        navigationController?.view.layer.add(transition, forKey: nil)
-        navigationController?.pushViewController(vc, animated: false)
     }
     
     private func createLoader() {
-        spinner = MyIndicator(frame: CGRect(x: 0, y: 0 , width: 32, height: 32), image: UIImage(named: "loader")!)
+        spinner = CustomIndicator(frame: CGRect(x: 0, y: 0 , width: 32, height: 32), image: UIImage(named: "loader")!)
         spinner?.center = self.view.center
         self.view.addSubview(spinner!)
         spinner?.startAnimating()
@@ -301,7 +317,6 @@ extension EventViewController {
         tableView.isHidden = true
         navigationController?.setNavigationBarHidden(true, animated: false)
         imitateNavBarView.isHidden = true
-        
     }
     
     private func fillData(in cell: TableViewCell, indexPath: IndexPath) {
@@ -351,11 +366,17 @@ extension EventViewController {
         
     }
     
+    private func scrollTableToTop() {
+        tableView.beginUpdates()
+        tableView.setContentOffset(.zero, animated: false)
+        tableView.endUpdates()
+    }
+    
     private func createBlurEffect() {
         visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
         visualEffectView?.frame = (navigationController?.navigationBar.bounds.insetBy(dx: 0, dy: -30).offsetBy(dx: 0, dy: -30))!
         self.navigationController?.navigationBar.addSubview(visualEffectView!)
-        self.navigationController?.navigationBar.sendSubview(toBack: visualEffectView!)
+        self.navigationController?.navigationBar.sendSubviewToBack(visualEffectView!)
     }
     
     private func setNavigationBarAppearance() {
@@ -402,7 +423,7 @@ extension EventViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
     }
     
     private func regularConstraints(offset: CGFloat ) {

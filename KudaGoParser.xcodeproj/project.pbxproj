@@ -12,7 +12,7 @@
 		5F5C96DA20BC74D400114570 /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C96D920BC74D400114570 /* CustomPageControl.swift */; };
 		5F5C96E820BD3A1200114570 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F5C96DF20BC9C9000114570 /* SF-Pro-Text-Regular.otf */; };
 		5F8DE46F20CBE522005D8C51 /* DropShadowEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8DE46E20CBE522005D8C51 /* DropShadowEffect.swift */; };
-		5F8DE47120CBFB59005D8C51 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8DE47020CBFB59005D8C51 /* UIColorExtension.swift */; };
+		5F8DE47120CBFB59005D8C51 /* UIColor+RedColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8DE47020CBFB59005D8C51 /* UIColor+RedColor.swift */; };
 		5FA4A2DE20B6DEF8003B924E /* DetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA4A2DD20B6DEF8003B924E /* DetailViewCell.swift */; };
 		5FA4A2E020B6DF73003B924E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA4A2DF20B6DF73003B924E /* DetailViewController.swift */; };
 		5FA5E80A20A9650C0036F92A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E80920A9650C0036F92A /* AppDelegate.swift */; };
@@ -22,9 +22,8 @@
 		5FA5E81420A9650F0036F92A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FA5E81220A9650F0036F92A /* LaunchScreen.storyboard */; };
 		5FA5E81C20A9A3240036F92A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 5FA5E81B20A9A3240036F92A /* .gitignore */; };
 		5FA5E81E20A9A7240036F92A /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E81D20A9A7240036F92A /* TableViewCell.swift */; };
-		5FA5E82020A9A7EE0036F92A /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E81F20A9A7EE0036F92A /* Events.swift */; };
 		5FA5E82220A9A8B50036F92A /* EventsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E82120A9A8B50036F92A /* EventsService.swift */; };
-		5FA5E82420A9A9FE0036F92A /* UrlRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E82320A9A9FE0036F92A /* UrlRequest.swift */; };
+		5FA5E82420A9A9FE0036F92A /* ParseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E82320A9A9FE0036F92A /* ParseType.swift */; };
 		5FAB2F5E20C1539600BB8021 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FAB2F5D20C1539600BB8021 /* Connectivity.swift */; };
 		5FAB2F6020C15B4400BB8021 /* RefreshContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FAB2F5F20C15B4400BB8021 /* RefreshContent.swift */; };
 		5FBE6FA120BEDB5600FDB1B3 /* NoConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FBE6FA020BEDB5600FDB1B3 /* NoConnectionViewController.swift */; };
@@ -32,7 +31,7 @@
 		5FCF391120B8B0D2000B19AF /* RefreshContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FCF391020B8B0D2000B19AF /* RefreshContent.xib */; };
 		5FD3B57620BD799A002CA5D2 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3B57520BD799A002CA5D2 /* ShadowView.swift */; };
 		5FD3B57820BD7A31002CA5D2 /* InteractivePopRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3B57720BD7A31002CA5D2 /* InteractivePopRecognizer.swift */; };
-		5FD3B59A20BE8060002CA5D2 /* MyIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3B59920BE8060002CA5D2 /* MyIndicator.swift */; };
+		5FD3B59A20BE8060002CA5D2 /* CustomIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3B59920BE8060002CA5D2 /* CustomIndicator.swift */; };
 		5FECD2AF20D7D24D0077A007 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FECD2AE20D7D24D0077A007 /* SF-Pro-Text-Bold.otf */; };
 		5FECD2B420D7D2810077A007 /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FECD2B020D7D2810077A007 /* SF-Pro-Display-Bold.otf */; };
 		5FECD2B520D7D2810077A007 /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FECD2B120D7D2810077A007 /* SF-Pro-Display-Black.otf */; };
@@ -48,6 +47,7 @@
 		5FECD2C820EA2CE20077A007 /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FECD2C720EA2CE20077A007 /* Cities.swift */; };
 		5FECD2CA20EDF8AF0077A007 /* EventsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FECD2C920EDF8AF0077A007 /* EventsDataModel.swift */; };
 		5FF09D9920C51F4B00AF74B6 /* CitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF09D9820C51F4B00AF74B6 /* CitiesViewController.swift */; };
+		5FFD7FE521526EDE00C6D628 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FFD7FE421526EDE00C6D628 /* Events.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,7 +55,7 @@
 		5F5C96D920BC74D400114570 /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
 		5F5C96DF20BC9C9000114570 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		5F8DE46E20CBE522005D8C51 /* DropShadowEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropShadowEffect.swift; sourceTree = "<group>"; };
-		5F8DE47020CBFB59005D8C51 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		5F8DE47020CBFB59005D8C51 /* UIColor+RedColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+RedColor.swift"; sourceTree = "<group>"; };
 		5FA4A2DD20B6DEF8003B924E /* DetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCell.swift; sourceTree = "<group>"; };
 		5FA4A2DF20B6DF73003B924E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		5FA5E80620A9650C0036F92A /* KudaGoParser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KudaGoParser.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,9 +67,8 @@
 		5FA5E81520A9650F0036F92A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5FA5E81B20A9A3240036F92A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		5FA5E81D20A9A7240036F92A /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		5FA5E81F20A9A7EE0036F92A /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		5FA5E82120A9A8B50036F92A /* EventsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsService.swift; sourceTree = "<group>"; };
-		5FA5E82320A9A9FE0036F92A /* UrlRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlRequest.swift; sourceTree = "<group>"; };
+		5FA5E82320A9A9FE0036F92A /* ParseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseType.swift; sourceTree = "<group>"; };
 		5FAB2F5D20C1539600BB8021 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		5FAB2F5F20C15B4400BB8021 /* RefreshContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshContent.swift; sourceTree = "<group>"; };
 		5FBE6FA020BEDB5600FDB1B3 /* NoConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoConnectionViewController.swift; sourceTree = "<group>"; };
@@ -77,7 +76,7 @@
 		5FCF391020B8B0D2000B19AF /* RefreshContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RefreshContent.xib; sourceTree = "<group>"; };
 		5FD3B57520BD799A002CA5D2 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		5FD3B57720BD7A31002CA5D2 /* InteractivePopRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractivePopRecognizer.swift; sourceTree = "<group>"; };
-		5FD3B59920BE8060002CA5D2 /* MyIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyIndicator.swift; sourceTree = "<group>"; };
+		5FD3B59920BE8060002CA5D2 /* CustomIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomIndicator.swift; sourceTree = "<group>"; };
 		5FECD2AE20D7D24D0077A007 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		5FECD2B020D7D2810077A007 /* SF-Pro-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Bold.otf"; sourceTree = "<group>"; };
 		5FECD2B120D7D2810077A007 /* SF-Pro-Display-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Black.otf"; sourceTree = "<group>"; };
@@ -93,6 +92,7 @@
 		5FECD2C720EA2CE20077A007 /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
 		5FECD2C920EDF8AF0077A007 /* EventsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsDataModel.swift; sourceTree = "<group>"; };
 		5FF09D9820C51F4B00AF74B6 /* CitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesViewController.swift; sourceTree = "<group>"; };
+		5FFD7FE421526EDE00C6D628 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		82173B61C174347F25878969 /* Pods-KudaGoParser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KudaGoParser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KudaGoParser/Pods-KudaGoParser.debug.xcconfig"; sourceTree = "<group>"; };
 		8B1961C9338FA6E5D2C40985 /* Pods-KudaGoParser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KudaGoParser.release.xcconfig"; path = "Pods/Target Support Files/Pods-KudaGoParser/Pods-KudaGoParser.release.xcconfig"; sourceTree = "<group>"; };
 		E4950C3EA53DDBD31CE2F7FD /* Pods_KudaGoParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KudaGoParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,13 +133,13 @@
 			isa = PBXGroup;
 			children = (
 				5F8DE46E20CBE522005D8C51 /* DropShadowEffect.swift */,
-				5F8DE47020CBFB59005D8C51 /* UIColorExtension.swift */,
+				5F8DE47020CBFB59005D8C51 /* UIColor+RedColor.swift */,
 				5FAB2F5D20C1539600BB8021 /* Connectivity.swift */,
 				5F5C96D920BC74D400114570 /* CustomPageControl.swift */,
 				5FD3B57720BD7A31002CA5D2 /* InteractivePopRecognizer.swift */,
 				5FD3B57520BD799A002CA5D2 /* ShadowView.swift */,
 				5F097E6720BBFC24007304B4 /* AnnotationPin.swift */,
-				5FD3B59920BE8060002CA5D2 /* MyIndicator.swift */,
+				5FD3B59920BE8060002CA5D2 /* CustomIndicator.swift */,
 			);
 			path = ViewClasses;
 			sourceTree = "<group>";
@@ -219,7 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				5FECD2B820EA2BDA0077A007 /* DecodableStructures */,
-				5FA5E82320A9A9FE0036F92A /* UrlRequest.swift */,
+				5FA5E82320A9A9FE0036F92A /* ParseType.swift */,
 				5FECD2C920EDF8AF0077A007 /* EventsDataModel.swift */,
 				5FA5E82120A9A8B50036F92A /* EventsService.swift */,
 			);
@@ -253,7 +253,7 @@
 		5FECD2B820EA2BDA0077A007 /* DecodableStructures */ = {
 			isa = PBXGroup;
 			children = (
-				5FA5E81F20A9A7EE0036F92A /* Events.swift */,
+				5FFD7FE421526EDE00C6D628 /* Events.swift */,
 				5FECD2C520EA2CDB0077A007 /* DetailImages.swift */,
 				5FECD2C720EA2CE20077A007 /* Cities.swift */,
 				5FECD2C120EA2CC80077A007 /* Place.swift */,
@@ -300,6 +300,7 @@
 				TargetAttributes = {
 					5FA5E80520A9650B0036F92A = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -397,14 +398,15 @@
 				5FD3B57620BD799A002CA5D2 /* ShadowView.swift in Sources */,
 				5FAB2F5E20C1539600BB8021 /* Connectivity.swift in Sources */,
 				5FECD2C220EA2CC80077A007 /* Place.swift in Sources */,
+				5FFD7FE521526EDE00C6D628 /* Events.swift in Sources */,
 				5FA4A2E020B6DF73003B924E /* DetailViewController.swift in Sources */,
-				5F8DE47120CBFB59005D8C51 /* UIColorExtension.swift in Sources */,
+				5F8DE47120CBFB59005D8C51 /* UIColor+RedColor.swift in Sources */,
 				5FECD2C420EA2CD00077A007 /* Coords.swift in Sources */,
 				5FA5E81E20A9A7240036F92A /* TableViewCell.swift in Sources */,
 				5FECD2BA20EA2C950077A007 /* Result.swift in Sources */,
 				5FECD2C020EA2CB70077A007 /* Size.swift in Sources */,
 				5F8DE46F20CBE522005D8C51 /* DropShadowEffect.swift in Sources */,
-				5FD3B59A20BE8060002CA5D2 /* MyIndicator.swift in Sources */,
+				5FD3B59A20BE8060002CA5D2 /* CustomIndicator.swift in Sources */,
 				5FECD2BE20EA2CAE0077A007 /* Image.swift in Sources */,
 				5FA5E82220A9A8B50036F92A /* EventsService.swift in Sources */,
 				5FA5E80C20A9650C0036F92A /* EventViewController.swift in Sources */,
@@ -415,12 +417,11 @@
 				5FAB2F6020C15B4400BB8021 /* RefreshContent.swift in Sources */,
 				5FECD2C620EA2CDB0077A007 /* DetailImages.swift in Sources */,
 				5FA5E80A20A9650C0036F92A /* AppDelegate.swift in Sources */,
-				5FA5E82420A9A9FE0036F92A /* UrlRequest.swift in Sources */,
+				5FA5E82420A9A9FE0036F92A /* ParseType.swift in Sources */,
 				5FA4A2DE20B6DEF8003B924E /* DetailViewCell.swift in Sources */,
 				5FD3B57820BD7A31002CA5D2 /* InteractivePopRecognizer.swift in Sources */,
 				5FECD2BC20EA2C9F0077A007 /* Dates.swift in Sources */,
 				5FBE6FA120BEDB5600FDB1B3 /* NoConnectionViewController.swift in Sources */,
-				5FA5E82020A9A7EE0036F92A /* Events.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,7 +576,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nikita.ru.KudaGoParser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -595,7 +596,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nikita.ru.KudaGoParser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

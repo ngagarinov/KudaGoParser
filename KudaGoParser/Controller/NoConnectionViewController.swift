@@ -10,9 +10,12 @@ import UIKit
 
 class NoConnectionViewController: UIViewController {
     
-    @IBOutlet weak var reconnectButton: UIButton!
+    //MARK: IBOutlets
+    
     @IBOutlet weak var navBarView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
+    
+    //MARK: NoConnectionViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +32,9 @@ class NoConnectionViewController: UIViewController {
         if let statusbar = UIApplication.shared.value(forKey: "statusBar") as? UIView {
             statusbar.backgroundColor = red
         }
-        UIApplication.shared.statusBarStyle = .lightContent
+        var preferredStatusBarStyle : UIStatusBarStyle {
+            return .lightContent
+        }
         view.backgroundColor = red
     }
 }

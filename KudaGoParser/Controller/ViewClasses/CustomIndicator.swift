@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CutstomIndicator: UIActivityIndicatorView {
+class CustomIndicator: UIActivityIndicatorView {
     
     let imageView = UIImageView()
     

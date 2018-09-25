@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+struct Events: Decodable {
+    let results: [Result]
+}

@@ -12,6 +12,8 @@ import Nuke
 
 class DetailViewController: UITableViewController, MKMapViewDelegate {
     
+    // MARK: Properties
+    
     var lat: Double?
     var lon: Double?
     var eventId: Int?
@@ -27,6 +29,8 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
     private var pin: AnnotationPin!
     private var eventsService = EventsService()
     private var floatButton = UIButton()
+    
+    // MARK: DetailViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +76,8 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
     
 }
 
+//MARK: DetailViewController extenstion
+
 extension DetailViewController {
     
     @objc func getDirectionsAction() {
@@ -94,16 +100,18 @@ extension DetailViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    //MARK: Private helpers
+    
     private func setTableViewAppearance() {
         tableView?.estimatedRowHeight = 231
-        tableView?.rowHeight = UITableViewAutomaticDimension
+        tableView?.rowHeight = UITableView.automaticDimension
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsSelection = false
     }
     
     private func setStatusBar() {
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.regular)
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.regular)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(blurEffectView)
@@ -123,7 +131,7 @@ extension DetailViewController {
         floatButton.translatesAutoresizingMaskIntoConstraints = false
         floatButton.backgroundColor = .white
         floatButton.setImage(UIImage(named:"back"), for: .normal)
-        floatButton.addTarget(self, action: #selector(backAction), for: UIControlEvents.touchUpInside)
+        floatButton.addTarget(self, action: #selector(backAction), for: UIControl.Event.touchUpInside)
         DropShadowEffect.setupProperties(view: floatButton, cornerRadius: 16, shadowRadius: 4, widthOffset: 0, heightOffset: 2)
         view.addSubview(floatButton)
         if #available(iOS 11.0, *) {
@@ -172,7 +180,7 @@ extension DetailViewController {
         
         // Отображаем место на карте, если место вернулось с API
         if let latitude = lat, let longitude = lon {
-            cell.getDirectionsButton.addTarget(self, action: #selector(getDirectionsAction), for: UIControlEvents.touchUpInside)
+            cell.getDirectionsButton.addTarget(self, action: #selector(getDirectionsAction), for: UIControl.Event.touchUpInside)
             cell.mapView.delegate = self
             let locationCoordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             pin = AnnotationPin(coordinate: locationCoordinates)

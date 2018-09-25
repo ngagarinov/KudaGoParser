@@ -26,7 +26,7 @@ class DetailViewCell: UITableViewCell,UIScrollViewDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        pageControl.superview?.bringSubview(toFront: pageControl)
+        pageControl.superview?.bringSubviewToFront(pageControl)
         scrollView.delegate = self
         
         setupGetDirectionsButtonAppearance()
@@ -39,7 +39,7 @@ class DetailViewCell: UITableViewCell,UIScrollViewDelegate {
     }
     
     func setupGetDirectionsButtonAppearance() {
-        getDirectionsButton.superview?.bringSubview(toFront: getDirectionsButton)
+        getDirectionsButton.superview?.bringSubviewToFront(getDirectionsButton)
         getDirectionsButton.backgroundColor = .white
         getDirectionsButton.setTitle("Проложить маршрут", for: .normal)
         getDirectionsButton.tintColor = .customRed()

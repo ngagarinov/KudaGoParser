@@ -14,11 +14,18 @@ protocol CitiesVCDelegate {
 
 class CitiesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    //MARK: IBOutlets
+    
     @IBOutlet weak var tableView: UITableView!
+    
+    //MARK: Properties
+    
     var cities = [Cities]()
     var slug: String?
     var cityName: String?
     var delegate: CitiesVCDelegate?
+    
+    //MARK: CitiesViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +48,7 @@ class CitiesViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
     
+    //MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cities.count
@@ -54,6 +62,8 @@ class CitiesViewController: UIViewController, UITableViewDataSource, UITableView
         return cell!
     }
     
+    //MARK: UItableViewDelegate
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let cell = tableView.cellForRow(at: indexPath) {
@@ -61,6 +71,7 @@ class CitiesViewController: UIViewController, UITableViewDataSource, UITableView
         }
         slug = cities[indexPath.row].slug
         cityName = cities[indexPath.row].name
+        dismiss(animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -71,12 +82,16 @@ class CitiesViewController: UIViewController, UITableViewDataSource, UITableView
     }
 }
 
+//MARK: CitiesViewController extenstion
+
 extension CitiesViewController {
     
+    //MARK: Private helpers
+    
     private func setBackButton() {
-        let backButton = UIBarButtonItem(title: "Закрыть", style: UIBarButtonItemStyle.done, target: nil, action: nil)
+        let backButton = UIBarButtonItem(title: "Закрыть", style: UIBarButtonItem.Style.done, target: nil, action: nil)
         backButton.tintColor = .customRed()
-        backButton.setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "SFProText-Regular", size: 17)!], for: .normal)
+        backButton.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "SFProText-Regular", size: 17)!], for: .normal)
         navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         navigationController?.navigationBar.backIndicatorImage = UIImage()
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
