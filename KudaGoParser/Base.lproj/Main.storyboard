@@ -418,7 +418,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o7R-0b-gAu">
-                                            <rect key="frame" x="117" y="670" width="141" height="32"/>
+                                            <rect key="frame" x="117" y="671" width="141" height="31"/>
                                             <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="12"/>
                                             <inset key="contentEdgeInsets" minX="11" minY="9" maxX="11" maxY="8"/>
                                             <state key="normal" title="Button"/>
@@ -447,13 +447,13 @@
                                             </constraints>
                                         </scrollView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6g-0g-E90">
-                                            <rect key="frame" x="16" y="304" width="343" height="19.5"/>
+                                            <rect key="frame" x="16" y="305" width="343" height="19"/>
                                             <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FxM-fr-Jte">
-                                            <rect key="frame" x="16" y="339.5" width="343" height="19.5"/>
+                                            <rect key="frame" x="16" y="340" width="343" height="19"/>
                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -530,7 +530,7 @@
                                             </subviews>
                                         </stackView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gau-4j-W3a">
-                                            <rect key="frame" x="16" y="264" width="343" height="24"/>
+                                            <rect key="frame" x="16" y="264" width="343" height="25"/>
                                             <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>

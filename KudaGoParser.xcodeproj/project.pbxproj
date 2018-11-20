@@ -190,6 +190,7 @@
 				5FA5E80820A9650C0036F92A /* KudaGoParser */,
 				5FA5E80720A9650C0036F92A /* Products */,
 				3A3E2EC3686DD3A9411DD9A2 /* Pods */,
+				5FA5E81B20A9A3240036F92A /* .gitignore */,
 				293C6F74F7195C1250038670 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -242,7 +243,6 @@
 		5FA5E82720A9AA710036F92A /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				5FA5E81B20A9A3240036F92A /* .gitignore */,
 				5FA5E81520A9650F0036F92A /* Info.plist */,
 				5FA5E81020A9650F0036F92A /* Assets.xcassets */,
 				5FA5E80920A9650C0036F92A /* AppDelegate.swift */,
