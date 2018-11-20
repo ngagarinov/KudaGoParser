@@ -157,7 +157,6 @@ class EventViewController: UIViewController, CitiesVCDelegate {
                 self.spinner?.stopAnimating()
                 self.tableView.isHidden = false
                 self.imitateNavBarView.isHidden = false
-                self.scrollTableToTop()
             }
         }
     }
@@ -170,7 +169,7 @@ class EventViewController: UIViewController, CitiesVCDelegate {
             switch UIScreen.main.nativeBounds.height {
             case 2436:
                 if offset > 0 && offset < 50 {
-                    logoTopConstraint.constant = 36 + offset * 0.75
+                    logoTopConstraint.constant = 36 + (offset * 0.75)
                     logoHeightConstraint.constant = 44 - (offset * 0.6)
                     logoWidthConstraint.constant = 107 - (offset * 1.5)
                     cityButtonRightConstraint.constant = 26 - (offset * 0.5)
@@ -364,12 +363,6 @@ extension EventViewController {
             transition: .fadeIn(duration: 0.33)
         ), into: cell.picture)
         
-    }
-    
-    private func scrollTableToTop() {
-        tableView.beginUpdates()
-        tableView.setContentOffset(.zero, animated: false)
-        tableView.endUpdates()
     }
     
     private func createBlurEffect() {

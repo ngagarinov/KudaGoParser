@@ -180,7 +180,7 @@ class EventsService {
             self.listOfDates.append(Dates(start: self.listOfStart.first!, end: self.listOfEnd.last!))
             self.listOfStart.removeAll()
             self.listOfEnd.removeAll()
-            self.listOfFields.append(Result(id: id,title: title, description: description,place: place, price: price, images: images, dates: dates,bodyText: bodyText))
+            self.listOfFields.append(Result(id: id,title: title, description: description,place: place, price: price, images: images, dates: dates,bodyText: bodyText)) 
             self.listOfAddress.append(Place(address: address, coords: coords))
             self.listOfCoords.append(Coords(lat: lat, lon: lon))
         }
