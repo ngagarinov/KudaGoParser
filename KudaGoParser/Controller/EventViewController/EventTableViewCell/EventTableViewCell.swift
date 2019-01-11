@@ -8,14 +8,14 @@
 
 import UIKit
 
-class TableViewCell: UITableViewCell {
+class EventTableViewCell: UITableViewCell {
     
     @IBOutlet weak var shadowView: UIView!
+    @IBOutlet weak var roundView: UIView!
     @IBOutlet weak var placeStackView: UIStackView!
     @IBOutlet weak var priceImage: UIImageView!
     @IBOutlet weak var dateImage: UIImageView!
     @IBOutlet weak var placeImage: UIImageView!
-    @IBOutlet weak var roundView: UIView!
     @IBOutlet weak var picture: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!

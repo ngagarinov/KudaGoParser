@@ -71,6 +71,8 @@ class EventViewController: UIViewController, CitiesVCDelegate {
             setPullToRefresh()
             cityButton.setTitleColor(.customRed(), for: .normal)
             
+            tableView.register(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+            
             eventsService.getEvents(currentDate: currentDate, location: locationSlug) {
                 self.tableView?.reloadData()
                 self.spinner?.stopAnimating()
@@ -218,7 +220,7 @@ extension EventViewController: UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! EventTableViewCell
         
         fillData(in: cell, indexPath: indexPath)
         
@@ -242,7 +244,7 @@ extension EventViewController: UITableViewDataSource  {
 extension EventViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! TableViewCell
+        let cell = tableView.cellForRow(at: indexPath) as! EventTableViewCell
         
         passPrice = cell.priceLabel.text
         passDate = cell.dateLabel.text
@@ -251,7 +253,6 @@ extension EventViewController: UITableViewDelegate {
         } else {
             passPlace = nil
         }
-        
         performSegue(withIdentifier: "detailSegue", sender: self)
     }
     
@@ -318,7 +319,7 @@ extension EventViewController {
         imitateNavBarView.isHidden = true
     }
     
-    private func fillData(in cell: TableViewCell, indexPath: IndexPath) {
+    private func fillData(in cell: EventTableViewCell, indexPath: IndexPath) {
         cell.titleLabel.text = eventsService.listOfFields[indexPath.row].title.uppercased()
         cell.descriptionLabel.text = eventsService.listOfFields[indexPath.row].description
         let price = eventsService.listOfFields[indexPath.row].price

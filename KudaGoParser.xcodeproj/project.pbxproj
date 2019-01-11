@@ -11,6 +11,8 @@
 		5F097E6820BBFC24007304B4 /* AnnotationPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F097E6720BBFC24007304B4 /* AnnotationPin.swift */; };
 		5F5C96DA20BC74D400114570 /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C96D920BC74D400114570 /* CustomPageControl.swift */; };
 		5F5C96E820BD3A1200114570 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F5C96DF20BC9C9000114570 /* SF-Pro-Text-Regular.otf */; };
+		5F75682821E89CC000A2130C /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F75682621E89CC000A2130C /* EventTableViewCell.xib */; };
+		5F75682F21E8B25D00A2130C /* DetailViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F75682D21E8B25D00A2130C /* DetailViewCell.xib */; };
 		5F8DE46F20CBE522005D8C51 /* DropShadowEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8DE46E20CBE522005D8C51 /* DropShadowEffect.swift */; };
 		5F8DE47120CBFB59005D8C51 /* UIColor+RedColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8DE47020CBFB59005D8C51 /* UIColor+RedColor.swift */; };
 		5FA4A2DE20B6DEF8003B924E /* DetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA4A2DD20B6DEF8003B924E /* DetailViewCell.swift */; };
@@ -21,7 +23,7 @@
 		5FA5E81120A9650F0036F92A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FA5E81020A9650F0036F92A /* Assets.xcassets */; };
 		5FA5E81420A9650F0036F92A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FA5E81220A9650F0036F92A /* LaunchScreen.storyboard */; };
 		5FA5E81C20A9A3240036F92A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 5FA5E81B20A9A3240036F92A /* .gitignore */; };
-		5FA5E81E20A9A7240036F92A /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E81D20A9A7240036F92A /* TableViewCell.swift */; };
+		5FA5E81E20A9A7240036F92A /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E81D20A9A7240036F92A /* EventTableViewCell.swift */; };
 		5FA5E82220A9A8B50036F92A /* EventsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E82120A9A8B50036F92A /* EventsService.swift */; };
 		5FA5E82420A9A9FE0036F92A /* ParseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA5E82320A9A9FE0036F92A /* ParseType.swift */; };
 		5FAB2F5E20C1539600BB8021 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FAB2F5D20C1539600BB8021 /* Connectivity.swift */; };
@@ -54,6 +56,8 @@
 		5F097E6720BBFC24007304B4 /* AnnotationPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationPin.swift; sourceTree = "<group>"; };
 		5F5C96D920BC74D400114570 /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
 		5F5C96DF20BC9C9000114570 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
+		5F75682621E89CC000A2130C /* EventTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTableViewCell.xib; sourceTree = "<group>"; };
+		5F75682D21E8B25D00A2130C /* DetailViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailViewCell.xib; sourceTree = "<group>"; };
 		5F8DE46E20CBE522005D8C51 /* DropShadowEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropShadowEffect.swift; sourceTree = "<group>"; };
 		5F8DE47020CBFB59005D8C51 /* UIColor+RedColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+RedColor.swift"; sourceTree = "<group>"; };
 		5FA4A2DD20B6DEF8003B924E /* DetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCell.swift; sourceTree = "<group>"; };
@@ -66,7 +70,7 @@
 		5FA5E81320A9650F0036F92A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5FA5E81520A9650F0036F92A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5FA5E81B20A9A3240036F92A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		5FA5E81D20A9A7240036F92A /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		5FA5E81D20A9A7240036F92A /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		5FA5E82120A9A8B50036F92A /* EventsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsService.swift; sourceTree = "<group>"; };
 		5FA5E82320A9A9FE0036F92A /* ParseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseType.swift; sourceTree = "<group>"; };
 		5FAB2F5D20C1539600BB8021 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
@@ -157,7 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				5FA5E80B20A9650C0036F92A /* EventViewController.swift */,
-				5FA5E81D20A9A7240036F92A /* TableViewCell.swift */,
+				5F75682921E8A03600A2130C /* EventTableViewCell */,
 			);
 			path = EventViewController;
 			sourceTree = "<group>";
@@ -167,6 +171,7 @@
 			children = (
 				5FA4A2DF20B6DF73003B924E /* DetailViewController.swift */,
 				5FA4A2DD20B6DEF8003B924E /* DetailViewCell.swift */,
+				5F75682D21E8B25D00A2130C /* DetailViewCell.xib */,
 			);
 			path = DetailViewController;
 			sourceTree = "<group>";
@@ -182,6 +187,15 @@
 				5F5C96DF20BC9C9000114570 /* SF-Pro-Text-Regular.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		5F75682921E8A03600A2130C /* EventTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				5FA5E81D20A9A7240036F92A /* EventTableViewCell.swift */,
+				5F75682621E89CC000A2130C /* EventTableViewCell.xib */,
+			);
+			path = EventTableViewCell;
 			sourceTree = "<group>";
 		};
 		5FA5E7FD20A9650B0036F92A = {
@@ -332,6 +346,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F75682821E89CC000A2130C /* EventTableViewCell.xib in Resources */,
+				5F75682F21E8B25D00A2130C /* DetailViewCell.xib in Resources */,
 				5FA5E81C20A9A3240036F92A /* .gitignore in Resources */,
 				5FCF391120B8B0D2000B19AF /* RefreshContent.xib in Resources */,
 				5FECD2B620D7D2810077A007 /* SF-Pro-Text-Semibold.otf in Resources */,
@@ -402,7 +418,7 @@
 				5FA4A2E020B6DF73003B924E /* DetailViewController.swift in Sources */,
 				5F8DE47120CBFB59005D8C51 /* UIColor+RedColor.swift in Sources */,
 				5FECD2C420EA2CD00077A007 /* Coords.swift in Sources */,
-				5FA5E81E20A9A7240036F92A /* TableViewCell.swift in Sources */,
+				5FA5E81E20A9A7240036F92A /* EventTableViewCell.swift in Sources */,
 				5FECD2BA20EA2C950077A007 /* Result.swift in Sources */,
 				5FECD2C020EA2CB70077A007 /* Size.swift in Sources */,
 				5F8DE46F20CBE522005D8C51 /* DropShadowEffect.swift in Sources */,
