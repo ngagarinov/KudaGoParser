@@ -323,7 +323,7 @@ extension EventViewController {
         cell.titleLabel.text = eventsService.listOfFields[indexPath.row].title.uppercased()
         cell.descriptionLabel.text = eventsService.listOfFields[indexPath.row].description
         let price = eventsService.listOfFields[indexPath.row].price
-        if  price == ""{
+        if  price == "" {
             cell.priceLabel.text = "Бесплатно"
         } else {
             cell.priceLabel.text = price
@@ -358,11 +358,13 @@ extension EventViewController {
         }
         
         let imageURL =  eventsService.listOfImages[indexPath.row].picture
-        let url = URL(string: imageURL)
-        Nuke.loadImage(with: url!, options: ImageLoadingOptions(
-            placeholder: UIImage(named: "not_found"),
-            transition: .fadeIn(duration: 0.33)
-        ), into: cell.picture)
+        let placeholder = UIImage(named: "not_found")
+        cell.picture.loadImage(with: imageURL, placeholder: placeholder)
+        
+//        Nuke.loadImage(with: url, options: ImageLoadingOptions(
+//            placeholder: UIImage(named: "not_found"),
+//            transition: .fadeIn(duration: 0.33)
+//        ), into: cell.picture)
         
     }
     

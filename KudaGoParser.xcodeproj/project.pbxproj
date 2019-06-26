@@ -11,6 +11,7 @@
 		5F097E6820BBFC24007304B4 /* AnnotationPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F097E6720BBFC24007304B4 /* AnnotationPin.swift */; };
 		5F5C96DA20BC74D400114570 /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5C96D920BC74D400114570 /* CustomPageControl.swift */; };
 		5F5C96E820BD3A1200114570 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F5C96DF20BC9C9000114570 /* SF-Pro-Text-Regular.otf */; };
+		5F630AC421F73D96008C1D8F /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F630AC321F73D96008C1D8F /* UIImageView.swift */; };
 		5F75682821E89CC000A2130C /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F75682621E89CC000A2130C /* EventTableViewCell.xib */; };
 		5F75682F21E8B25D00A2130C /* DetailViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F75682D21E8B25D00A2130C /* DetailViewCell.xib */; };
 		5F8DE46F20CBE522005D8C51 /* DropShadowEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8DE46E20CBE522005D8C51 /* DropShadowEffect.swift */; };
@@ -56,6 +57,7 @@
 		5F097E6720BBFC24007304B4 /* AnnotationPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationPin.swift; sourceTree = "<group>"; };
 		5F5C96D920BC74D400114570 /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
 		5F5C96DF20BC9C9000114570 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
+		5F630AC321F73D96008C1D8F /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		5F75682621E89CC000A2130C /* EventTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTableViewCell.xib; sourceTree = "<group>"; };
 		5F75682D21E8B25D00A2130C /* DetailViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailViewCell.xib; sourceTree = "<group>"; };
 		5F8DE46E20CBE522005D8C51 /* DropShadowEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropShadowEffect.swift; sourceTree = "<group>"; };
@@ -137,7 +139,6 @@
 			isa = PBXGroup;
 			children = (
 				5F8DE46E20CBE522005D8C51 /* DropShadowEffect.swift */,
-				5F8DE47020CBFB59005D8C51 /* UIColor+RedColor.swift */,
 				5FAB2F5D20C1539600BB8021 /* Connectivity.swift */,
 				5F5C96D920BC74D400114570 /* CustomPageControl.swift */,
 				5FD3B57720BD7A31002CA5D2 /* InteractivePopRecognizer.swift */,
@@ -170,8 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				5FA4A2DF20B6DF73003B924E /* DetailViewController.swift */,
-				5FA4A2DD20B6DEF8003B924E /* DetailViewCell.swift */,
-				5F75682D21E8B25D00A2130C /* DetailViewCell.xib */,
+				5F75683021E8B8C100A2130C /* DetailViewCell */,
 			);
 			path = DetailViewController;
 			sourceTree = "<group>";
@@ -189,6 +189,24 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		5F630AC121F73D2C008C1D8F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5F8DE47020CBFB59005D8C51 /* UIColor+RedColor.swift */,
+				5F630AC321F73D96008C1D8F /* UIImageView.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5F630AC221F73D41008C1D8F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5FA5E80D20A9650C0036F92A /* Main.storyboard */,
+				5FA5E81220A9650F0036F92A /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		5F75682921E8A03600A2130C /* EventTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +214,15 @@
 				5F75682621E89CC000A2130C /* EventTableViewCell.xib */,
 			);
 			path = EventTableViewCell;
+			sourceTree = "<group>";
+		};
+		5F75683021E8B8C100A2130C /* DetailViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				5FA4A2DD20B6DEF8003B924E /* DetailViewCell.swift */,
+				5F75682D21E8B25D00A2130C /* DetailViewCell.xib */,
+			);
+			path = DetailViewCell;
 			sourceTree = "<group>";
 		};
 		5FA5E7FD20A9650B0036F92A = {
@@ -222,8 +249,8 @@
 			children = (
 				5FA5E82620A9AA5E0036F92A /* Controller */,
 				5FA5E82520A9AA400036F92A /* Model */,
-				5FA5E80D20A9650C0036F92A /* Main.storyboard */,
-				5FA5E81220A9650F0036F92A /* LaunchScreen.storyboard */,
+				5F630AC221F73D41008C1D8F /* View */,
+				5F630AC121F73D2C008C1D8F /* Extensions */,
 				5F5C96DE20BC9C8F00114570 /* Fonts */,
 				5FA5E82720A9AA710036F92A /* SupportingFiles */,
 			);
@@ -314,7 +341,7 @@
 				TargetAttributes = {
 					5FA5E80520A9650B0036F92A = {
 						CreatedOnToolsVersion = 9.3;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -389,7 +416,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-KudaGoParser/Pods-KudaGoParser-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-KudaGoParser/Pods-KudaGoParser-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Nuke/Nuke.framework",
 			);
@@ -400,7 +427,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KudaGoParser/Pods-KudaGoParser-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KudaGoParser/Pods-KudaGoParser-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -413,6 +440,7 @@
 				5F097E6820BBFC24007304B4 /* AnnotationPin.swift in Sources */,
 				5FD3B57620BD799A002CA5D2 /* ShadowView.swift in Sources */,
 				5FAB2F5E20C1539600BB8021 /* Connectivity.swift in Sources */,
+				5F630AC421F73D96008C1D8F /* UIImageView.swift in Sources */,
 				5FECD2C220EA2CC80077A007 /* Place.swift in Sources */,
 				5FFD7FE521526EDE00C6D628 /* Events.swift in Sources */,
 				5FA4A2E020B6DF73003B924E /* DetailViewController.swift in Sources */,
@@ -590,9 +618,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = nikita.ru.KudaGoParser;
+				PRODUCT_BUNDLE_IDENTIFIER = nikita.ru.KudaGoPars;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -610,9 +638,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = nikita.ru.KudaGoParser;
+				PRODUCT_BUNDLE_IDENTIFIER = nikita.ru.KudaGoPars;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -1,6 +1,6 @@
 PODS:
-  - Alamofire (4.7.2)
-  - Nuke (7.1)
+  - Alamofire (4.8.2)
+  - Nuke (7.6.3)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
@@ -12,9 +12,9 @@ SPEC REPOS:
     - Nuke
 
 SPEC CHECKSUMS:
-  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
-  Nuke: 922cb05945ed5c7980a3ad0bc9ae57fbbd12899f
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  Nuke: 44130e95e09463f8773ae4b96b90de1eba6b3350
 
 PODFILE CHECKSUM: 28dc96fa850785b17f98f55cecd7c1f3e3be0244
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0.beta.2

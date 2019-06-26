@@ -37,6 +37,9 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
         
         setTableViewAppearance()
         setInteractiveRecognizer()
+        
+        tableView.register(UINib(nibName: "DetailViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+
         eventsService.getImages(id: eventId! ) {
             self.tableView?.reloadData()
         }
@@ -158,10 +161,14 @@ extension DetailViewController {
             imgView.contentMode = .scaleAspectFill
             imgView.clipsToBounds = true
             
-            let url = URL(string:  eventsService.listOfDetailImages[index].picture)
-            Nuke.loadImage(with: url!, options: ImageLoadingOptions(
-                placeholder: UIImage(named: "not_found"),
-                transition: .fadeIn(duration: 0.33)), into: imgView)
+            let imageStringURL = eventsService.listOfDetailImages[index].picture
+            let placeholder = UIImage(named: "not_found")
+            imgView.loadImage(with: imageStringURL, placeholder: placeholder)
+            
+//            let url = URL(string:  eventsService.listOfDetailImages[index].picture)
+//            Nuke.loadImage(with: url!, options: ImageLoadingOptions(
+//                placeholder: UIImage(named: "not_found"),
+//                transition: .fadeIn(duration: 0.33)), into: imgView)
             cell.scrollView.addSubview(imgView)
         }
         cell.scrollView.contentSize = CGSize(width: (cell.scrollView.frame.size.width * CGFloat(countOfImages)), height: cell.scrollView.frame.size.height)
