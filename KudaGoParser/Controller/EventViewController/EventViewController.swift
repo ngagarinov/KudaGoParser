@@ -39,6 +39,9 @@ class EventViewController: UIViewController, CitiesVCDelegate {
     var passPrice: String?
     var passDate: String?
     
+    private var result: [Result]?
+    private var cities: [Cities]?
+    
     private var eventsService = EventsService()
     private var page = 1
     private var locationSlug = "msk"
@@ -73,13 +76,16 @@ class EventViewController: UIViewController, CitiesVCDelegate {
             
             tableView.register(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
             
-            eventsService.getEvents(currentDate: currentDate, location: locationSlug) {
+            eventsService.getEvents(currentDate: currentDate, location: locationSlug) { result in
+                self.result = result
                 self.tableView?.reloadData()
                 self.spinner?.stopAnimating()
                 self.tableView.isHidden = false
                 self.imitateNavBarView.isHidden = false
             }
-            eventsService.getCities()
+            eventsService.getCities() { cities in
+                self.cities = cities
+            }
         }
     }
     
@@ -109,16 +115,17 @@ class EventViewController: UIViewController, CitiesVCDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detailSegue" {
             if let indexPath  = tableView.indexPathForSelectedRow {
+                guard let result = self.result else { return }
                 let dvc = segue.destination  as! DetailViewController
-                let id = eventsService.listOfFields[indexPath.row].id
-                if let bodyText = eventsService.listOfFields[indexPath.row].bodyText {
+                let id = result[indexPath.row].id
+                if let bodyText = result[indexPath.row].bodyText {
                     dvc.eventDetail = bodyText
                 } else {
                     dvc.eventDetail = "net"
                 }
-                let desc = eventsService.listOfFields[indexPath.row].description
-                let title = eventsService.listOfFields[indexPath.row].title
-                if let latitude = eventsService.listOfCoords[indexPath.row].lat, let longitude = eventsService.listOfCoords[indexPath.row].lon {
+                let desc = result[indexPath.row].description
+                let title = result[indexPath.row].title
+                if let latitude = result[indexPath.row].place?.coords?.lat, let longitude = result[indexPath.row].place?.coords?.lon {
                     dvc.lat = latitude
                     dvc.lon = longitude
                 } else {
@@ -136,9 +143,10 @@ class EventViewController: UIViewController, CitiesVCDelegate {
         
         if segue.identifier == "citySegue" {
             let cvc = segue.destination as! CitiesViewController
-            let cities = eventsService.listOfCities
-            cvc.cities = cities
-            cvc.slug = locationSlug
+            if let city = cities {
+                cvc.cities = city
+                cvc.slug = locationSlug
+            }
         }
         
         if let destination = segue.destination as? CitiesViewController{
@@ -150,16 +158,18 @@ class EventViewController: UIViewController, CitiesVCDelegate {
         if locationSlug != slug {
             locationSlug = slug
             locationName = name
-            clearObject()
             spinner?.startAnimating()
             tableView.isHidden = true
             imitateNavBarView.isHidden = true
-            eventsService.getEvents(currentDate: currentDate, location: locationSlug) {
+            eventsService.getEvents(currentDate: currentDate, location: locationSlug) { result in
+                self.result = result
                 self.tableView?.reloadData()
                 self.spinner?.stopAnimating()
                 self.tableView.isHidden = false
                 self.imitateNavBarView.isHidden = false
+//                self.tableView.contentOffset.y = 0
             }
+            self.tableView.contentOffset.y = 0
         }
     }
     
@@ -215,7 +225,7 @@ class EventViewController: UIViewController, CitiesVCDelegate {
 extension EventViewController: UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return eventsService.listOfFields.count
+        return result?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -229,11 +239,15 @@ extension EventViewController: UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        if indexPath.row == eventsService.listOfFields.count - 1 {
+        guard let result = self.result else { return }
+        if indexPath.row == result.count - 1 {
             page += 1
             
-            eventsService.getPagination(currentDate: currentDate, location: locationSlug, page: page) {
+            eventsService.getPagination(currentDate: currentDate, location: locationSlug, page: page) { result in
+                if let newResult = result {
+                self.result?.append(contentsOf: newResult)
                 self.tableView?.reloadData()
+                }
             }
         }
     }
@@ -272,7 +286,8 @@ extension EventViewController {
             showOfflinePage()
         } else {
             page = 1
-            eventsService.getPullToRefresh(currentDate: currentDate, location: locationSlug) {
+            eventsService.getPullToRefresh(currentDate: currentDate, location: locationSlug) { result in
+                self.result = result
                 self.tableView?.reloadData()
                 self.tableViewRefreshControl.endRefreshing()
             }
@@ -301,16 +316,6 @@ extension EventViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    private func clearObject() {
-        page = 1
-        eventsService.listOfFields.removeAll()
-        eventsService.listOfDates.removeAll()
-        eventsService.listOfAddress.removeAll()
-        eventsService.listOfImages.removeAll()
-        eventsService.listOfCoords.removeAll()
-        eventsService.listOfDetailImages.removeAll()
-    }
-    
     private func showOfflinePage() -> Void {
         UIView.setAnimationsEnabled(false)
         self.performSegue(withIdentifier: "noInternet", sender: self)
@@ -320,52 +325,49 @@ extension EventViewController {
     }
     
     private func fillData(in cell: EventTableViewCell, indexPath: IndexPath) {
-        cell.titleLabel.text = eventsService.listOfFields[indexPath.row].title.uppercased()
-        cell.descriptionLabel.text = eventsService.listOfFields[indexPath.row].description
-        let price = eventsService.listOfFields[indexPath.row].price
+        guard let result = self.result else { return }
+        cell.titleLabel.text = result[indexPath.row].title.uppercased()
+        cell.descriptionLabel.text = result[indexPath.row].description
+        let price = result[indexPath.row].price
         if  price == "" {
             cell.priceLabel.text = "Бесплатно"
         } else {
             cell.priceLabel.text = price
         }
-        if let place = eventsService.listOfAddress[indexPath.row].address {
+    
+        if let place = result[indexPath.row].place?.address {
             cell.placeLabel.text = place
             cell.placeStackView.isHidden = false
         } else {
             cell.placeStackView.isHidden = true
         }
         
-        let startUnixDate = eventsService.listOfDates[indexPath.row].start
-        let endUnixDate = eventsService.listOfDates[indexPath.row].end
-        let startDate = Date(timeIntervalSince1970: startUnixDate )
-        let endDate = Date(timeIntervalSince1970: endUnixDate)
-        var calendar = Calendar.current
-        calendar.timeZone = TimeZone(abbreviation: "GMT")!
-        let compareMonths = calendar.isDate(startDate, equalTo: endDate, toGranularity: .month)
-        let compareDays = calendar.isDate(startDate, equalTo: endDate, toGranularity: .day)
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-        dateFormatter.setLocalizedDateFormatFromTemplate("MMMMd")
-        if compareMonths {
-            if compareDays {
-                cell.dateLabel.text = dateFormatter.string(from: endDate)
+        if let startUnixDate = result[indexPath.row].dates.first?.start, let endUnixDate = result[indexPath.row].dates.first?.end {
+            let startDate = Date(timeIntervalSince1970: startUnixDate )
+            let endDate = Date(timeIntervalSince1970: endUnixDate)
+            var calendar = Calendar.current
+            calendar.timeZone = TimeZone(abbreviation: "GMT")!
+            let compareMonths = calendar.isDate(startDate, equalTo: endDate, toGranularity: .month)
+            let compareDays = calendar.isDate(startDate, equalTo: endDate, toGranularity: .day)
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "ru_RU")
+            dateFormatter.setLocalizedDateFormatFromTemplate("MMMMd")
+            if compareMonths {
+                if compareDays {
+                    cell.dateLabel.text = dateFormatter.string(from: endDate)
+                } else {
+                    let startDay = calendar.component(.day, from: startDate)
+                    cell.dateLabel.text = "\(startDay)-" + dateFormatter.string(from: endDate)
+                }
             } else {
-                let startDay = calendar.component(.day, from: startDate)
-                cell.dateLabel.text = "\(startDay)-" + dateFormatter.string(from: endDate)
+                cell.dateLabel.text = dateFormatter.string(from: startDate) + " - " + dateFormatter.string(from: endDate)
             }
-        } else {
-            cell.dateLabel.text = dateFormatter.string(from: startDate) + " - " + dateFormatter.string(from: endDate)
         }
-        
-        let imageURL =  eventsService.listOfImages[indexPath.row].picture
-        let placeholder = UIImage(named: "not_found")
-        cell.picture.loadImage(with: imageURL, placeholder: placeholder)
-        
-//        Nuke.loadImage(with: url, options: ImageLoadingOptions(
-//            placeholder: UIImage(named: "not_found"),
-//            transition: .fadeIn(duration: 0.33)
-//        ), into: cell.picture)
-        
+
+        if  let imageURL = result[indexPath.row].images.first?.thumbnails.picture {
+            let placeholder = UIImage(named: "not_found")
+            cell.picture.loadImage(with: imageURL, placeholder: placeholder)
+        }
     }
     
     private func createBlurEffect() {
