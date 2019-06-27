@@ -26,7 +26,7 @@ class EventTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+//        contentView.backgroundColor = .white
         roundView.layer.masksToBounds = true
         roundView.layer.cornerRadius = 16
         

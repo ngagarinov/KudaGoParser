@@ -24,6 +24,8 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
     var eventTitle: String?
     var eventDetail: String?
     
+    private var detailImages: [Image]?
+    
     private var popRecognizer: InteractivePopRecognizer?
     private var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
     private var pin: AnnotationPin!
@@ -35,12 +37,15 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = .white
+        
         setTableViewAppearance()
         setInteractiveRecognizer()
-        
+    
         tableView.register(UINib(nibName: "DetailViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
 
-        eventsService.getImages(id: eventId! ) {
+        eventsService.getImages(id: eventId! ) { images in
+            self.detailImages = images
             self.tableView?.reloadData()
         }
     }
@@ -149,30 +154,28 @@ extension DetailViewController {
     }
     
     private func fillData(in cell: DetailViewCell) {
-        
         // Создаем карусель картинок
-        let countOfImages = eventsService.listOfDetailImages.count
-        cell.pageControl.numberOfPages = countOfImages
-        for index in 0..<countOfImages {
-            frame.origin.x = cell.scrollView.frame.size.width * CGFloat(index)
-            frame.size = cell.scrollView.frame.size
-            
-            let imgView = UIImageView(frame: frame)
-            imgView.contentMode = .scaleAspectFill
-            imgView.clipsToBounds = true
-            
-            let imageStringURL = eventsService.listOfDetailImages[index].picture
-            let placeholder = UIImage(named: "not_found")
-            imgView.loadImage(with: imageStringURL, placeholder: placeholder)
-            
-//            let url = URL(string:  eventsService.listOfDetailImages[index].picture)
-//            Nuke.loadImage(with: url!, options: ImageLoadingOptions(
-//                placeholder: UIImage(named: "not_found"),
-//                transition: .fadeIn(duration: 0.33)), into: imgView)
-            cell.scrollView.addSubview(imgView)
+        if let detailImages = self.detailImages {
+            let countOfImages = detailImages.count
+            cell.pageControl.numberOfPages = countOfImages
+            for index in 0..<countOfImages {
+                frame.origin.x = cell.scrollView.frame.size.width * CGFloat(index)
+                frame.size = cell.scrollView.frame.size
+                
+                let imgView = UIImageView(frame: frame)
+                imgView.contentMode = .scaleAspectFill
+                imgView.clipsToBounds = true
+                
+                //            let imageStringURL = eventsService.listOfDetailImages[index].picture
+                
+                let imageStringUrl = detailImages[index].thumbnails.picture
+                let placeholder = UIImage(named: "not_found")
+                imgView.loadImage(with: imageStringUrl, placeholder: placeholder)
+                
+                cell.scrollView.addSubview(imgView)
+            }
+            cell.scrollView.contentSize = CGSize(width: (cell.scrollView.frame.size.width * CGFloat(countOfImages)), height: cell.scrollView.frame.size.height)
         }
-        cell.scrollView.contentSize = CGSize(width: (cell.scrollView.frame.size.width * CGFloat(countOfImages)), height: cell.scrollView.frame.size.height)
-        
         // Отображаем данные, полученные с предыдущего VC
         cell.titleLabel.text = eventTitle?.uppercased()
         cell.descriptionLabel.text = eventDesc
