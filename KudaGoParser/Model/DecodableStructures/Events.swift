@@ -9,5 +9,5 @@
 import Foundation
 
 struct Events: Decodable {
-    let results: [Result]
+    let results: [Event]
 }

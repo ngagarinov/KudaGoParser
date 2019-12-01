@@ -10,9 +10,13 @@ import UIKit
 import MapKit
 import Nuke
 
-class DetailViewController: UITableViewController, MKMapViewDelegate {
+class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate {
     
-    // MARK: Properties
+    //MARK: - IBOultets
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: - Properties
     
     var lat: Double?
     var lon: Double?
@@ -32,7 +36,7 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
     private var eventsService = EventsService()
     private var floatButton = UIButton()
     
-    // MARK: DetailViewController
+    // MARK: - DetailViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,32 +45,43 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
         
         setTableViewAppearance()
         setInteractiveRecognizer()
+        createFloatingButton()
+        setStatusBar()
     
         tableView.register(UINib(nibName: "DetailViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
 
-        eventsService.getImages(id: eventId! ) { images in
-            self.detailImages = images
-            self.tableView?.reloadData()
+        eventsService.getImages(id: eventId! ) { result in
+            switch result {
+            case .data(let images):
+                self.detailImages = images
+                self.tableView?.reloadData()
+            case .error:
+                print("error")
+            }
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        createFloatingButton()
-        setStatusBar()
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! DetailViewCell
         
@@ -81,10 +96,9 @@ class DetailViewController: UITableViewController, MKMapViewDelegate {
         
         return annotationView
     }
-    
 }
 
-//MARK: DetailViewController extenstion
+//MARK: - DetailViewController extenstion
 
 extension DetailViewController {
     
@@ -108,7 +122,7 @@ extension DetailViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    //MARK: Private helpers
+    //MARK: - Private helpers
     
     private func setTableViewAppearance() {
         tableView?.estimatedRowHeight = 231
@@ -124,6 +138,7 @@ extension DetailViewController {
         blurEffectView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(blurEffectView)
         blurEffectView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        blurEffectView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         blurEffectView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         blurEffectView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         if #available(iOS 11.0, *) {
@@ -133,21 +148,20 @@ extension DetailViewController {
         }
     }
     
-    
     private func createFloatingButton() {
         floatButton = UIButton(type: .custom)
         floatButton.translatesAutoresizingMaskIntoConstraints = false
         floatButton.backgroundColor = .white
         floatButton.setImage(UIImage(named:"back"), for: .normal)
         floatButton.addTarget(self, action: #selector(backAction), for: UIControl.Event.touchUpInside)
-        DropShadowEffect.setupProperties(view: floatButton, cornerRadius: 16, shadowRadius: 4, widthOffset: 0, heightOffset: 2)
+        floatButton.setupShadowEffect(cornerRadius: 16, shadowRadius: 4, widthOffset: 0, heightOffset: 2)
         view.addSubview(floatButton)
         if #available(iOS 11.0, *) {
-            floatButton.leadingAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
-            floatButton.topAnchor.constraint(equalTo: tableView.safeAreaLayoutGuide.topAnchor, constant: 7).isActive = true
+            floatButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
+            floatButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 7).isActive = true
         } else {
-            floatButton.leadingAnchor.constraint(equalTo: tableView.layoutMarginsGuide.leadingAnchor, constant: 8).isActive = true
-            floatButton.topAnchor.constraint(equalTo: tableView.layoutMarginsGuide.topAnchor, constant: 7).isActive = true
+            floatButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 8).isActive = true
+            floatButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 7).isActive = true
         }
         floatButton.widthAnchor.constraint(equalToConstant: 48).isActive = true
         floatButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
@@ -165,11 +179,8 @@ extension DetailViewController {
                 let imgView = UIImageView(frame: frame)
                 imgView.contentMode = .scaleAspectFill
                 imgView.clipsToBounds = true
-                
-                //            let imageStringURL = eventsService.listOfDetailImages[index].picture
-                
                 let imageStringUrl = detailImages[index].thumbnails.picture
-                let placeholder = UIImage(named: "not_found")
+                let placeholder = UIImage(named: "placeholder")
                 imgView.loadImage(with: imageStringUrl, placeholder: placeholder)
                 
                 cell.scrollView.addSubview(imgView)

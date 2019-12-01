@@ -29,7 +29,6 @@ class EventTableViewCell: UITableViewCell {
 //        contentView.backgroundColor = .white
         roundView.layer.masksToBounds = true
         roundView.layer.cornerRadius = 16
-        
     }
     
 }

@@ -3,6 +3,5 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'KudaGoParser' do
-pod 'Alamofire', '~> 4.7'
 pod 'Nuke', '~> 7.0'
 end

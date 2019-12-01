@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -29,11 +27,11 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="728"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="U6J-bW-C7u" id="bkB-7R-PMp">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="727.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="728"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="04O-bB-uId">
-                        <rect key="frame" x="117" y="680.5" width="141" height="32"/>
+                        <rect key="frame" x="116" y="681" width="143" height="32"/>
                         <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="12"/>
                         <inset key="contentEdgeInsets" minX="11" minY="9" maxX="11" maxY="8"/>
                         <state key="normal" title="Button"/>
@@ -47,34 +45,32 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgU-9i-SYb">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="375" id="dlF-tJ-f4o"/>
-                                    <constraint firstAttribute="height" constant="240" id="fjN-0f-866"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="fgU-9i-SYb" secondAttribute="trailing" id="Lmt-fJ-5pP"/>
                             <constraint firstItem="fgU-9i-SYb" firstAttribute="leading" secondItem="hi6-lp-UVm" secondAttribute="leading" id="QbD-OG-oKw"/>
                             <constraint firstItem="fgU-9i-SYb" firstAttribute="top" secondItem="hi6-lp-UVm" secondAttribute="top" id="WbP-gG-Njt"/>
+                            <constraint firstItem="fgU-9i-SYb" firstAttribute="height" secondItem="hi6-lp-UVm" secondAttribute="height" id="fxF-JI-4g1"/>
+                            <constraint firstItem="fgU-9i-SYb" firstAttribute="width" secondItem="hi6-lp-UVm" secondAttribute="width" id="kdF-3B-DQV"/>
                             <constraint firstAttribute="height" constant="240" id="o7G-Qx-XXq"/>
                             <constraint firstAttribute="bottom" secondItem="fgU-9i-SYb" secondAttribute="bottom" id="yEp-gz-1Gg"/>
                         </constraints>
                     </scrollView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0G-2r-F2N">
-                        <rect key="frame" x="16" y="314.5" width="343" height="19.5"/>
+                        <rect key="frame" x="15" y="315" width="345" height="19.5"/>
                         <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rfa-pB-j6N">
-                        <rect key="frame" x="16" y="350" width="343" height="19.5"/>
+                        <rect key="frame" x="15" y="350.5" width="345" height="19.5"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="CH8-nQ-gEY">
-                        <rect key="frame" x="0.0" y="369.5" width="375" height="358"/>
+                        <rect key="frame" x="0.0" y="370" width="375" height="358"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="bdN-H2-kQK">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="158"/>
@@ -145,7 +141,7 @@
                         </subviews>
                     </stackView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sbm-XR-6SW">
-                        <rect key="frame" x="16" y="264" width="343" height="34.5"/>
+                        <rect key="frame" x="15" y="264" width="345" height="35"/>
                         <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="20"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>

@@ -20,6 +20,7 @@ extension UIImageView {
     // MARK: - Internal methods
     
     func loadImage(with urlString: String, placeholder: UIImage? = nil) {
+//        let placeholder = UIImage(named: "placeholder")
         guard let url = URL(string: urlString) else {
             self.display(image: placeholder)
             return
@@ -28,6 +29,7 @@ extension UIImageView {
     }
     
     func loadImage(with url: URL, placeholder: UIImage?) {
+        
         Nuke.loadImage(
             with: url,
             options: ImageLoadingOptions(

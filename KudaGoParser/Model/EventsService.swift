@@ -10,119 +10,99 @@ import UIKit
 
 class EventsService {
     
-    func jsonTaskWith(request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        
-        let sessionConfiguration = URLSessionConfiguration.default
-        let session = URLSession(configuration: sessionConfiguration)
-        var request = request
-        request.httpMethod = "GET"
-        
-        let task = session.dataTask(with: request) { (data, response, error) in
-            
-            guard let HTTPResponse = response as? HTTPURLResponse else {
-                let userInfo = [ NSLocalizedDescriptionKey: NSLocalizedString("Missing HTTP Response", comment: "") ]
-                let error = NSError(domain: "", code: 0, userInfo: userInfo)
-                completionHandler(nil, nil, error)
-                return
-            }
-            if data == nil {
-                if let error = error {
-                    completionHandler(nil, HTTPResponse, error)
-                }
-            } else {
-                completionHandler(data, HTTPResponse, nil)
-            }
-        }
-        task.resume()
+    enum Result<ResultDataType> {
+           case data(ResultDataType)
+           case error
+       }
+    
+    var networkService: NetworkService
+    
+    init(networkService: NetworkService = NetworkService()) {
+        self.networkService = networkService
     }
     
-    func getEvents(currentDate: Double, location: String, completion: @escaping([Result]?) -> ()) {
+    func getEvents(currentDate: Double, location: String, completion: @escaping(Result<[Event]>) -> ()) {
         
         let request = ParseType.events(currentDate: currentDate, location: location).request
         
-        jsonTaskWith(request: request) { (data, request, error) in
-            
-            guard let data = data else { return }
-            do {
-                let eventJSON = try JSONDecoder().decode(Events.self, from: data)
-                
-                DispatchQueue.main.async {
-                    completion(eventJSON.results)
+        networkService.createRequest(with: request) { (data, error) in
+            DispatchQueue.main.async {
+                guard let data = data, let response = self.decodeJSON(type: Events.self, from: data) else {
+                    completion(.error)
+                    return
                 }
-            } catch let jsonErr as NSError {
-                print ("error:", jsonErr)
+                completion(.data(response.results))
             }
         }
     }
     
-    func getImages(id: Int, completion: @escaping([Image]?) -> ()) {
+    func getImages(id: Int, completion: @escaping(Result<[Image]>) -> ()) {
         
         let request = ParseType.detail(id: id).request
         
-        jsonTaskWith(request: request) { (data, request, error) in
-            guard let data = data else { return }
-            do {
-                let imagesJSON = try JSONDecoder().decode(DetailImages.self, from: data)
-                
-                DispatchQueue.main.async {
-                    completion(imagesJSON.images)
+        networkService.createRequest(with: request) { (data, error) in
+            DispatchQueue.main.async {
+                guard let data = data, let response = self.decodeJSON(type: DetailImages.self, from: data) else {
+                    completion(.error)
+                    return
                 }
-            } catch let jsonErr as NSError {
-                print ("error:", jsonErr)
+                completion(.data(response.images))
             }
         }
     }
     
-    func getCities(completion: @escaping([Cities]?) -> ()) {
-    
-        let request = ParseType.cities.request
+    func getCities(completion: @escaping(Result<[Cities]>) -> ()) {
         
-        jsonTaskWith(request: request) { (data, request, error) in
-            guard let data = data else { return }
-            do {
-                let citiesJSON = try JSONDecoder().decode([Cities].self, from: data)
-                completion(citiesJSON)
-                
-            } catch let jsonErr as NSError {
-                print ("error:", jsonErr)
+        let request = ParseType.cities.request
+        networkService.createRequest(with: request) { (data, error) in
+            DispatchQueue.main.async {
+                guard let data = data, let response = self.decodeJSON(type: [Cities].self, from: data) else {
+                    completion(.error)
+                    return
+                }
+                completion(.data(response))
             }
         }
     }
     
-    func getPullToRefresh(currentDate: Double, location: String, completion: @escaping([Result]?) -> ()) {
+    func getPullToRefresh(currentDate: Double, location: String, completion: @escaping(Result<[Event]>) -> ()) {
         
         let request = ParseType.events(currentDate: currentDate, location: location).request
-        
-        jsonTaskWith(request: request) { (data, request, error) in
-            guard let data = data else { return }
-            do {
-                let eventJSON = try JSONDecoder().decode(Events.self, from: data)
-                
-                DispatchQueue.main.async {
-                    completion(eventJSON.results)
+        networkService.createRequest(with: request) { (data, error) in
+            DispatchQueue.main.async {
+                guard let data = data, let response = self.decodeJSON(type: Events.self, from: data) else {
+                    completion(.error)
+                    return
                 }
-            } catch let jsonErr as NSError {
-                print ("error:", jsonErr)
-            }
+                completion(.data(response.results))
+            } 
         }
     }
-   
-    func getPagination(currentDate: Double, location: String, page: Int, completion: @escaping([Result]?) -> ()) {
+    
+    func getPagination(currentDate: Double, location: String, page: Int, completion: @escaping(Result<[Event]>) -> ()) {
         
         let request = ParseType.pages(page: page, currentDate: currentDate, location: location).request
         
-        jsonTaskWith(request: request) { (data, request, error) in
-            do {
-                guard let data = data else { return }
-                let eventJSON = try JSONDecoder().decode(Events.self, from: data)
-                
-                DispatchQueue.main.async {
-                    completion(eventJSON.results)
+        networkService.createRequest(with: request) { (data, error) in
+            DispatchQueue.main.async {
+                guard let data = data, let response = self.decodeJSON(type: Events.self, from: data) else {
+                    completion(.error)
+                    return
                 }
-            } catch let jsonErr as NSError {
-                print ("error:", jsonErr)
+                completion(.data(response.results))
             }
         }
     }
     
+    func decodeJSON<T: Decodable>(type: T.Type, from: Data?) -> T? {
+        let decoder = JSONDecoder()
+        guard let data = from else { return nil }
+        do {
+            let objects = try decoder.decode(type.self, from: data)
+            return objects
+        } catch let jsonError {
+            print("Failed to decode JSON", jsonError)
+            return nil
+        }
+    }
 }

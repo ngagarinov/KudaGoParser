@@ -43,7 +43,7 @@ class DetailViewCell: UITableViewCell,UIScrollViewDelegate {
         getDirectionsButton.backgroundColor = .white
         getDirectionsButton.setTitle("Проложить маршрут", for: .normal)
         getDirectionsButton.tintColor = .customRed()
-        DropShadowEffect.setupProperties(view: getDirectionsButton, cornerRadius: 16, shadowRadius: 4, widthOffset: 0, heightOffset: 2)
+        getDirectionsButton.setupShadowEffect(cornerRadius: 16, shadowRadius: 4, widthOffset: 0, heightOffset: 2)
     }
     
 }
