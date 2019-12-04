@@ -1,3 +1,22 @@
-PODFILE CHECKSUM: f9088df721c99a817c4eff8aa330e077c180deb7
+PODS:
+  - Nuke (8.3.1)
+  - SwiftMessages (7.0.1):
+    - SwiftMessages/App (= 7.0.1)
+  - SwiftMessages/App (7.0.1)
+
+DEPENDENCIES:
+  - Nuke
+  - SwiftMessages
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Nuke
+    - SwiftMessages
+
+SPEC CHECKSUMS:
+  Nuke: 85fb80f8df0cb26c28d2f4e0cb7fb93bcd6548d3
+  SwiftMessages: b577dc7043be8b299857ab35bb663dbff6483bd0
+
+PODFILE CHECKSUM: 838bbd09214c0a7a99b8b5494ebf056c3433b798
 
 COCOAPODS: 1.8.4
