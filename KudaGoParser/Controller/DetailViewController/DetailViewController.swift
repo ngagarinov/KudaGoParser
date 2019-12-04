@@ -29,7 +29,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var eventDetail: String?
     
     private var detailImages: [Image]?
-    
     private var popRecognizer: InteractivePopRecognizer?
     private var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
     private var pin: AnnotationPin!
@@ -172,6 +171,7 @@ extension DetailViewController {
         if let detailImages = self.detailImages {
             let countOfImages = detailImages.count
             cell.pageControl.numberOfPages = countOfImages
+            cell.pageControl.isHidden = false
             for index in 0..<countOfImages {
                 frame.origin.x = cell.scrollView.frame.size.width * CGFloat(index)
                 frame.size = cell.scrollView.frame.size
@@ -216,7 +216,9 @@ extension DetailViewController {
     }
     
     private func setInteractiveRecognizer() {
-        guard let controller = navigationController else { return }
+        guard let controller = navigationController else {
+            return
+        }
         popRecognizer = InteractivePopRecognizer(controller: controller)
         controller.interactivePopGestureRecognizer?.delegate = popRecognizer
     }

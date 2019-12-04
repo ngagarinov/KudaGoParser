@@ -1,7 +1,8 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '9.0'
+platform :ios, '10.0'
 use_frameworks!
 
 target 'KudaGoParser' do
-pod 'Nuke', '~> 7.0'
+pod 'Nuke'
+pod 'SwiftMessages'
 end

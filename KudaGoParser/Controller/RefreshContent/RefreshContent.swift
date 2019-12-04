@@ -24,8 +24,12 @@ class RefreshContent: UIView {
     }
     
     func stopAnimation() {
+        loader.isHidden = true
         self.loader.layer.removeAnimation(forKey: "rotationAnimation")
     }
     
+    func hidesLoader() {
+        loader.isHidden = true
+    }
     
 }

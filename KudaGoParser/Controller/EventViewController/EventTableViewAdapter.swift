@@ -10,6 +10,8 @@ import UIKit
 
 class EventTableViewAdapter: NSObject {
     
+    //MARK: - Properties
+    
     var event: [Event] = []
     var cities: [Cities] = []
     var page = 1
@@ -19,9 +21,10 @@ class EventTableViewAdapter: NSObject {
     weak var eventViewController: EventViewController?
     
     private var eventsService = EventsService()
+    private var tableView: UITableView
     private let currentDate = Date().timeIntervalSince1970
     
-    fileprivate (set) var tableView: UITableView
+    //MARK: - Initialization
     
     init(tableView: UITableView) {
         self.tableView = tableView
@@ -31,16 +34,20 @@ class EventTableViewAdapter: NSObject {
         self.tableView.register(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
     }
     
+    //MARK: - Public helpers
+    
     func configure(with result: [Event]) {
         self.event = result
         self.tableView.reloadData()
     }
     
-    func configure(with cities: [ Cities]) {
+    func configure(with cities: [Cities]) {
         self.cities = cities
     }
     
 }
+
+//MARK: - UITableViewDataSource Methods
 
 extension EventTableViewAdapter: UITableViewDataSource {
     
@@ -91,12 +98,14 @@ extension EventTableViewAdapter: UITableViewDataSource {
         }
         
         if  let imageURL = event[indexPath.row].images.first?.thumbnails.picture {
-            let placeholder = UIImage(named: "not_found")
+            let placeholder = UIImage(named: "placeholder")
             cell.picture.loadImage(with: imageURL, placeholder: placeholder)
         }
         return cell
     }
 }
+
+//MARK: - UITableViewDelegate Methods
 
 extension EventTableViewAdapter: UITableViewDelegate {
     

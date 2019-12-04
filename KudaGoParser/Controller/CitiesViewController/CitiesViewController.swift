@@ -14,18 +14,18 @@ protocol ToEventVCDelegate {
 
 class CitiesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    //MARK: IBOutlets
+    //MARK: - IBOutlets
     
     @IBOutlet weak var tableView: UITableView!
     
-    //MARK: Properties
+    //MARK: - Properties
     
     var cities = [Cities]()
     var slug: String?
     var cityName: String?
     var delegate: ToEventVCDelegate?
     
-    //MARK: CitiesViewController
+    //MARK: - CitiesViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +42,7 @@ class CitiesViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
     
-    //MARK: UITableViewDataSource
+    //MARK: - UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cities.count
@@ -56,7 +56,7 @@ class CitiesViewController: UIViewController, UITableViewDataSource, UITableView
         return cell!
     }
     
-    //MARK: UItableViewDelegate
+    //MARK: - UItableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -76,11 +76,11 @@ class CitiesViewController: UIViewController, UITableViewDataSource, UITableView
     }
 }
 
-//MARK: CitiesViewController extenstion
+//MARK: - CitiesViewController extenstion
 
 extension CitiesViewController {
     
-    //MARK: Private helpers
+    //MARK: - Private helpers
     
     private func fillData(in cell: UITableViewCell, indexPath: IndexPath) {
         

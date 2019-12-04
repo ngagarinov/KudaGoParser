@@ -20,9 +20,8 @@ extension UIImageView {
     // MARK: - Internal methods
     
     func loadImage(with urlString: String, placeholder: UIImage? = nil) {
-//        let placeholder = UIImage(named: "placeholder")
         guard let url = URL(string: urlString) else {
-            self.display(image: placeholder)
+            self.nuke_display(image: placeholder)
             return
         }
         self.loadImage(with: url, placeholder: placeholder)
@@ -39,5 +38,4 @@ extension UIImageView {
             into: self
         )
     }
-    
 }

@@ -96,7 +96,9 @@ class EventsService {
     
     func decodeJSON<T: Decodable>(type: T.Type, from: Data?) -> T? {
         let decoder = JSONDecoder()
-        guard let data = from else { return nil }
+        guard let data = from else {
+            return nil
+        }
         do {
             let objects = try decoder.decode(type.self, from: data)
             return objects

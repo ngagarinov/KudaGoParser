@@ -28,6 +28,7 @@ class DetailViewCell: UITableViewCell,UIScrollViewDelegate {
         
         pageControl.superview?.bringSubviewToFront(pageControl)
         scrollView.delegate = self
+        pageControl.isHidden = true
         
         setupGetDirectionsButtonAppearance()
         

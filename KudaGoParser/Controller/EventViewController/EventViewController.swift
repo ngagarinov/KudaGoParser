@@ -8,6 +8,7 @@
 
 import UIKit
 import Nuke
+import SwiftMessages
 
 class EventViewController: UIViewController, ToEventVCDelegate {
     
@@ -25,11 +26,9 @@ class EventViewController: UIViewController, ToEventVCDelegate {
     // MARK: Properties
     
     private lazy var adapter = EventTableViewAdapter(tableView: tableView)
-    
     private var eventsService = EventsService()
-    private let currentDate = Date().timeIntervalSince1970//
+    private let currentDate = Date().timeIntervalSince1970
     private var refreshControl: UIRefreshControl?
-    private var spinner: CustomIndicator?
     private var cityBarButtonItem: UIButton!
     private var refreshContent: RefreshContent!
     private var tableViewRefreshControl: UIRefreshControl = {
@@ -39,8 +38,21 @@ class EventViewController: UIViewController, ToEventVCDelegate {
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         return refreshControl
     }()
+    lazy private var spinner : SYActivityIndicatorView = {
+        return SYActivityIndicatorView(image: nil)
+    }()
+    lazy private var messageView: MessageView = {
+        let messageView = MessageView.viewFromNib(layout: .messageView)
+        messageView.configureTheme(.error)
+        messageView.configureDropShadow()
+        messageView.iconLabel?.isHidden = true
+        messageView.button?.isHidden = true
+        messageView.configureContent(title: "Ошибка", body: "Проверьте соединение с интернетом")
+        messageView.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        return messageView
+    }()
     
-    // MARK: EventViewController
+    // MARK: - EventViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,34 +63,14 @@ class EventViewController: UIViewController, ToEventVCDelegate {
         setPullToRefresh()
         setNavBarRightItem()
         createBlurEffect()
+        getEventsRequest()
+        getCitiesRequest()
         adapter.eventViewController = self
-        
-        eventsService.getEvents(currentDate: currentDate, location: adapter.locationSlug) { result in
-            switch result {
-            case .data(let event):
-                self.adapter.configure(with: event)
-                self.spinner?.stopAnimating()
-                self.tableView.isHidden = false
-                self.navigationController?.setNavigationBarHidden(false, animated: false)
-            case .error:
-                self.showOfflinePage()
-            }
-        }
-        
-        eventsService.getCities() { result in
-            switch result {
-            case .data(let cities):
-                self.adapter.configure(with: cities)
-            case .error:
-                self.showOfflinePage()
-            }
-        }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        refreshContent.startAnimation()
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        messageView.isHidden = true
     }
     
     func finishPassing(slug: String, name: String) {
@@ -86,27 +78,19 @@ class EventViewController: UIViewController, ToEventVCDelegate {
             adapter.locationSlug = slug
             adapter.locationName = name
             setNavBarRightItem()
-            spinner?.startAnimating()
+            spinner.startAnimating()
             tableView.isHidden = true
-            eventsService.getEvents(currentDate: currentDate, location: adapter.locationSlug) { result in
-                switch result {
-                case .data(let event):
-                    self.adapter.configure(with: event)
-                    self.spinner?.stopAnimating()
-                    self.tableView.isHidden = false
-                    self.navigationController?.setNavigationBarHidden(false, animated: false)
-                case .error:
-                    self.showOfflinePage()
-                }
-            }
-             self.tableView.contentOffset.y = -88
+            getEventsRequest()
+            self.tableView.contentOffset.y = -88
         }
     }
 }
 
-//MARK: EventViewController extenstion
+//MARK: - EventViewController extenstion
 
 extension EventViewController {
+    
+    //MARK: - Objc func
     
     @objc func goToCityVC() {
         let controller: CitiesViewController = CitiesViewController.loadFromStoryboard()
@@ -118,42 +102,72 @@ extension EventViewController {
     
     @objc func pullToRefresh () {
         
+        refreshContent.startAnimation()
         adapter.page = 1
         eventsService.getPullToRefresh(currentDate: currentDate, location: adapter.locationSlug) { result in
             switch result {
             case .data(let event):
                 self.adapter.configure(with: event)
+                self.refreshContent.stopAnimation()
                 self.tableViewRefreshControl.endRefreshing()
             case .error:
-                self.showOfflinePage()
+                self.showErrorNotification()
+                self.refreshContent.stopAnimation()
+                self.tableViewRefreshControl.endRefreshing()
+            }
+        }
+        getCitiesRequest()
+    }
+    
+    //MARK: - Private helpers
+    
+    private func getEventsRequest() {
+        eventsService.getEvents(currentDate: currentDate, location: adapter.locationSlug) { result in
+            switch result {
+            case .data(let event):
+                self.adapter.configure(with: event)
+                self.spinner.stopAnimating()
+                self.tableView.isHidden = false
+                self.navigationController?.setNavigationBarHidden(false, animated: false)
+            case .error:
+                self.showErrorNotification()
+                self.spinner.stopAnimating()
+                self.tableView.isHidden = false
+                self.navigationController?.setNavigationBarHidden(false, animated: false)
             }
         }
     }
     
-    //MARK: Private helpers
+    private func getCitiesRequest() {
+        eventsService.getCities() { result in
+            switch result {
+            case .data(let cities):
+                self.adapter.configure(with: cities)
+            case .error:
+                print("error")
+            }
+        }
+    }
     
     private func createLoader() {
-        spinner = CustomIndicator(frame: CGRect(x: 0, y: 0 , width: 32, height: 32), image: UIImage(named: "loader")!)
-        spinner?.center = self.view.center
-        self.view.addSubview(spinner!)
-        spinner?.startAnimating()
-        spinner?.backgroundColor = .white
+        spinner.center = self.view.center
+        self.view.addSubview(spinner)
+        spinner.center = self.view.center
+        spinner.startAnimating()
         view.backgroundColor = .white
         //прячем таблицу и навигейшен бар на время загрузки
         tableView.isHidden = true
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    private func showOfflinePage() -> Void {
-        UIView.setAnimationsEnabled(false)
-        let controller: NoConnectionViewController = NoConnectionViewController.loadFromStoryboard()
-        navigationController?.pushViewController(controller, animated: true)
-        tableView.isHidden = true
-        navigationController?.setNavigationBarHidden(true, animated: true)
+    private func showErrorNotification()  {
+        messageView.isHidden = false
+        var config = SwiftMessages.Config()
+        config.duration = .seconds(seconds: 5)
+        SwiftMessages.show(config: config, view: messageView)
     }
     
     private func createBlurEffect() {
-        
         guard let navigationBar = navigationController?.navigationBar else { return }
 
         navigationBar.isTranslucent = true
@@ -198,6 +212,7 @@ extension EventViewController {
     private func setPullToRefresh() {
         if let objOfRefreshView = Bundle.main.loadNibNamed("RefreshContent", owner: self, options: nil)?.first as? RefreshContent {
             refreshContent = objOfRefreshView
+            refreshContent.hidesLoader()
             refreshContent.frame = tableViewRefreshControl.frame
             tableViewRefreshControl.addSubview(refreshContent)
         }
