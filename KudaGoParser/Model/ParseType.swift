@@ -8,12 +8,6 @@
 
 import UIKit
 
-//protocol URLPoint {
-//    var baseURL: URL { get }
-//    var path: String { get }
-//    var request: URLRequest { get }
-//}
-
 enum ParseType {
     
     case events(currentDate: Double, location: String)
