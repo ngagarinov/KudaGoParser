@@ -3,6 +3,5 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'KudaGoParser' do
-pod 'Nuke'
-pod 'SwiftMessages'
+
 end
