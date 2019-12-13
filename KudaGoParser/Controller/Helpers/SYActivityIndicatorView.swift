@@ -11,7 +11,7 @@ import UIKit
 import UIKit
 import QuartzCore
 
-public class SYActivityIndicatorView: UIView {
+final public class SYActivityIndicatorView: UIView {
     
     // MARK: - Variables
     
@@ -66,7 +66,7 @@ public class SYActivityIndicatorView: UIView {
         rotation.repeatCount = HUGE
         rotation.fillMode = CAMediaTimingFillMode.forwards
         rotation.fromValue = NSNumber(value: 0.0)
-        rotation.toValue = NSNumber(value: 3.14 * 2.0)
+        rotation.toValue = NSNumber(value: Double.pi * 2.0)
         
         layer.add(rotation, forKey: "rotate")
     }

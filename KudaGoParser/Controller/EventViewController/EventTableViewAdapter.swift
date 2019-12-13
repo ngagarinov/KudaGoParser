@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EventTableViewAdapter: NSObject {
+final class EventTableViewAdapter: NSObject {
     
     //MARK: - Properties
     

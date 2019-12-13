@@ -12,7 +12,7 @@ protocol ToEventVCDelegate {
     func finishPassing(slug: String, name: String)
 }
 
-class CitiesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+final class CitiesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     //MARK: - IBOutlets
     
@@ -76,13 +76,11 @@ class CitiesViewController: UIViewController, UITableViewDataSource, UITableView
     }
 }
 
-//MARK: - CitiesViewController extenstion
+//MARK: - Private CitiesViewController extenstion
 
-extension CitiesViewController {
+private extension CitiesViewController {
     
-    //MARK: - Private helpers
-    
-    private func fillData(in cell: UITableViewCell, indexPath: IndexPath) {
+    func fillData(in cell: UITableViewCell, indexPath: IndexPath) {
         
         cell.textLabel?.text = cities[indexPath.row].name
         cell.tintColor = .customRed()

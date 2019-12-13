@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RefreshContent: UIView {
+final class RefreshContent: UIView {
     
     var rotation: CABasicAnimation?
     @IBOutlet weak var loader: UIImageView!

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomImagePageControl: UIPageControl {
+final class CustomImagePageControl: UIPageControl {
     
     let activeImage:UIImage = UIImage(named: "selected_dot")!
     let inactiveImage:UIImage = UIImage(named: "unselected_dot")!

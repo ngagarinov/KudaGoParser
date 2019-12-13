@@ -10,7 +10,22 @@ import UIKit
 import MapKit
 import Nuke
 
-class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate {
+final class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate {
+    
+    // MARK: - Constants
+    
+    private enum Constants {
+        static let estimatedHeight: CGFloat = 231
+        static let cornerRadius: CGFloat = 16
+        static let shadowRadius: CGFloat = 4
+        static let heightOffset: Double = 2
+        static let leadingAnchor: CGFloat = 8
+        static let topAnchor: CGFloat = 7
+        static let widthAnchor: CGFloat = 48
+        static let heightAnchor: CGFloat = 32
+        static let latitudeDelta: CLLocationDegrees = 0.01
+        static let longitudeDelta: CLLocationDegrees = 0.01
+    }
     
     //MARK: - IBOultets
     
@@ -97,9 +112,9 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 }
 
-//MARK: - DetailViewController extenstion
+//MARK: - Private DetailViewController extenstion
 
-extension DetailViewController {
+private extension DetailViewController {
     
     @objc func getDirectionsAction() {
         if let latitude = lat, let longitude = lon {
@@ -121,17 +136,15 @@ extension DetailViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    //MARK: - Private helpers
-    
-    private func setTableViewAppearance() {
-        tableView?.estimatedRowHeight = 231
+    func setTableViewAppearance() {
+        tableView?.estimatedRowHeight = Constants.estimatedHeight
         tableView?.rowHeight = UITableView.automaticDimension
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsSelection = false
     }
     
-    private func setStatusBar() {
+    func setStatusBar() {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.regular)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.translatesAutoresizingMaskIntoConstraints = false
@@ -147,26 +160,26 @@ extension DetailViewController {
         }
     }
     
-    private func createFloatingButton() {
+    func createFloatingButton() {
         floatButton = UIButton(type: .custom)
         floatButton.translatesAutoresizingMaskIntoConstraints = false
         floatButton.backgroundColor = .white
         floatButton.setImage(UIImage(named:"back"), for: .normal)
         floatButton.addTarget(self, action: #selector(backAction), for: UIControl.Event.touchUpInside)
-        floatButton.setupShadowEffect(cornerRadius: 16, shadowRadius: 4, widthOffset: 0, heightOffset: 2)
+        floatButton.setupShadowEffect(cornerRadius: Constants.cornerRadius, shadowRadius: Constants.shadowRadius, widthOffset: 0, heightOffset: Constants.heightOffset)
         view.addSubview(floatButton)
         if #available(iOS 11.0, *) {
-            floatButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
-            floatButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 7).isActive = true
+            floatButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: Constants.leadingAnchor).isActive = true
+            floatButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.topAnchor).isActive = true
         } else {
-            floatButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 8).isActive = true
-            floatButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 7).isActive = true
+            floatButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: Constants.leadingAnchor).isActive = true
+            floatButton.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: Constants.topAnchor).isActive = true
         }
-        floatButton.widthAnchor.constraint(equalToConstant: 48).isActive = true
-        floatButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        floatButton.widthAnchor.constraint(equalToConstant: Constants.widthAnchor).isActive = true
+        floatButton.heightAnchor.constraint(equalToConstant: Constants.heightAnchor).isActive = true
     }
     
-    private func fillData(in cell: DetailViewCell) {
+    func fillData(in cell: DetailViewCell) {
         // Создаем карусель картинок
         if let detailImages = self.detailImages {
             let countOfImages = detailImages.count
@@ -205,7 +218,7 @@ extension DetailViewController {
             cell.mapView.delegate = self
             let locationCoordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             pin = AnnotationPin(coordinate: locationCoordinates)
-            let zoomSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            let zoomSpan = MKCoordinateSpan(latitudeDelta: Constants.latitudeDelta, longitudeDelta: Constants.longitudeDelta)
             let region = MKCoordinateRegion(center: locationCoordinates, span: zoomSpan)
             cell.mapView.setRegion(region, animated: true)
             cell.mapView.addAnnotation(pin)
@@ -215,7 +228,7 @@ extension DetailViewController {
         }
     }
     
-    private func setInteractiveRecognizer() {
+    func setInteractiveRecognizer() {
         guard let controller = navigationController else {
             return
         }

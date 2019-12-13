@@ -10,7 +10,17 @@ import UIKit
 import Nuke
 import SwiftMessages
 
-class EventViewController: UIViewController, ToEventVCDelegate {
+final class EventViewController: UIViewController, ToEventVCDelegate {
+    
+    // MARK: - Constants
+    
+    private enum Constants {
+        static let messageViewEdgeInset: CGFloat = 20
+        static let tableViewContentOffset: CGFloat = -88
+        static let errorNotificationSeconds: TimeInterval = 5
+        static let cityButtonLeftInset: CGFloat = -6
+        static let estimatedHeight: CGFloat = 100
+    }
     
     // MARK: IBOutlets
     
@@ -48,7 +58,10 @@ class EventViewController: UIViewController, ToEventVCDelegate {
         messageView.iconLabel?.isHidden = true
         messageView.button?.isHidden = true
         messageView.configureContent(title: "Ошибка", body: "Проверьте соединение с интернетом")
-        messageView.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        messageView.layoutMarginAdditions = UIEdgeInsets(top: Constants.messageViewEdgeInset,
+                                                         left: Constants.messageViewEdgeInset,
+                                                         bottom: Constants.messageViewEdgeInset,
+                                                         right: Constants.messageViewEdgeInset)
         return messageView
     }()
     
@@ -81,16 +94,14 @@ class EventViewController: UIViewController, ToEventVCDelegate {
             spinner.startAnimating()
             tableView.isHidden = true
             getEventsRequest()
-            self.tableView.contentOffset.y = -88
+            self.tableView.contentOffset.y = Constants.tableViewContentOffset
         }
     }
 }
 
-//MARK: - EventViewController extenstion
+//MARK: - Private EventViewController extenstion
 
-extension EventViewController {
-    
-    //MARK: - Objc func
+private extension EventViewController {
     
     @objc func goToCityVC() {
         let controller: CitiesViewController = CitiesViewController.loadFromStoryboard()
@@ -119,9 +130,7 @@ extension EventViewController {
         getCitiesRequest()
     }
     
-    //MARK: - Private helpers
-    
-    private func getEventsRequest() {
+    func getEventsRequest() {
         eventsService.getEvents(currentDate: currentDate, location: adapter.locationSlug) { result in
             switch result {
             case .data(let event):
@@ -138,7 +147,7 @@ extension EventViewController {
         }
     }
     
-    private func getCitiesRequest() {
+    func getCitiesRequest() {
         eventsService.getCities() { result in
             switch result {
             case .data(let cities):
@@ -149,7 +158,7 @@ extension EventViewController {
         }
     }
     
-    private func createLoader() {
+    func createLoader() {
         spinner.center = self.view.center
         self.view.addSubview(spinner)
         spinner.center = self.view.center
@@ -160,14 +169,14 @@ extension EventViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    private func showErrorNotification()  {
+    func showErrorNotification()  {
         messageView.isHidden = false
         var config = SwiftMessages.Config()
-        config.duration = .seconds(seconds: 5)
+        config.duration = .seconds(seconds: Constants.errorNotificationSeconds)
         SwiftMessages.show(config: config, view: messageView)
     }
     
-    private func createBlurEffect() {
+    func createBlurEffect() {
         guard let navigationBar = navigationController?.navigationBar else { return }
 
         navigationBar.isTranslucent = true
@@ -186,13 +195,13 @@ extension EventViewController {
         visualEffectView.layer.zPosition = -1
     }
     
-    private func setNavBarRightItem() {
+    func setNavBarRightItem() {
         cityBarButtonItem = UIButton(type: .system)
         let view = UIView()
         cityBarButtonItem.setTitle(adapter.locationName, for: .normal)
         cityBarButtonItem.setImage(UIImage(named: "right_bar_button"), for: .normal)
         cityBarButtonItem.semanticContentAttribute = .forceRightToLeft
-        cityBarButtonItem.titleEdgeInsets = UIEdgeInsets(top: 0, left: -6, bottom: 0, right: 0)
+        cityBarButtonItem.titleEdgeInsets = UIEdgeInsets(top: 0, left: Constants.cityButtonLeftInset, bottom: 0, right: 0)
         cityBarButtonItem.tintColor = .customRed()
         cityBarButtonItem.titleLabel?.font = UIFont(name: "SFProText-Semibold", size: 17)
         cityBarButtonItem.titleLabel?.contentMode = .scaleAspectFill
@@ -203,13 +212,13 @@ extension EventViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: view)
     }
     
-    private func setNavBarLogo() {
+    func setNavBarLogo() {
         var logo = UIImage(named: "kudago_logo")
         logo = logo?.withRenderingMode(.alwaysOriginal)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: logo, style:.plain, target: nil, action: nil)
     }
     
-    private func setPullToRefresh() {
+    func setPullToRefresh() {
         if let objOfRefreshView = Bundle.main.loadNibNamed("RefreshContent", owner: self, options: nil)?.first as? RefreshContent {
             refreshContent = objOfRefreshView
             refreshContent.hidesLoader()
@@ -219,11 +228,11 @@ extension EventViewController {
         tableView.refreshControl = tableViewRefreshControl
     }
     
-    private func setTableViewAppearance() {
+    func setTableViewAppearance() {
         tableView.backgroundColor = .white
         tableTitle.text = "Куда сходить"
         tableView.separatorStyle = .none
-        tableView.estimatedRowHeight = 100
+        tableView.estimatedRowHeight = Constants.estimatedHeight
         tableView.rowHeight = UITableView.automaticDimension
     }
 }

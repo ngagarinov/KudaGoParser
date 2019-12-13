@@ -8,7 +8,7 @@
 
 import MapKit
 
-class AnnotationPin: NSObject, MKAnnotation {
+final class AnnotationPin: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     
     init(coordinate: CLLocationCoordinate2D) {

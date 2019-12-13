@@ -206,13 +206,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		5F630AC221F73D41008C1D8F /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		5F75682921E8A03600A2130C /* EventTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,7 +260,6 @@
 				5FA5E82520A9AA400036F92A /* Model */,
 				5F1E58EB20CA95F1006A1BF3 /* Helpers */,
 				5F81321822C4C03D006506DB /* Service */,
-				5F630AC221F73D41008C1D8F /* View */,
 				5F630AC121F73D2C008C1D8F /* Extensions */,
 				5F5C96DE20BC9C8F00114570 /* Fonts */,
 				5FA5E82720A9AA710036F92A /* SupportingFiles */,

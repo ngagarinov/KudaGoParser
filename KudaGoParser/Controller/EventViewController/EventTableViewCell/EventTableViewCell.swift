@@ -8,7 +8,13 @@
 
 import UIKit
 
-class EventTableViewCell: UITableViewCell {
+final class EventTableViewCell: UITableViewCell {
+    
+    // MARK: - Constants
+    
+    private enum Constants {
+        static let cornerRadius: CGFloat = 16
+    }
     
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var roundView: UIView!
@@ -27,7 +33,7 @@ class EventTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         roundView.layer.masksToBounds = true
-        roundView.layer.cornerRadius = 16
+        roundView.layer.cornerRadius = Constants.cornerRadius
     }
     
 }

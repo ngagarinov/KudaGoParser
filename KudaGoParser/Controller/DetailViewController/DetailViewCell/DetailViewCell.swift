@@ -9,7 +9,13 @@
 import UIKit
 import MapKit
 
-class DetailViewCell: UITableViewCell,UIScrollViewDelegate {
+final class DetailViewCell: UITableViewCell,UIScrollViewDelegate {
+    
+    private enum Constants {
+        static let cornerRadius: CGFloat = 16
+        static let shadowRadius: CGFloat = 4
+        static let heightOffset: Double = 2
+    }
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -44,7 +50,7 @@ class DetailViewCell: UITableViewCell,UIScrollViewDelegate {
         getDirectionsButton.backgroundColor = .white
         getDirectionsButton.setTitle("Проложить маршрут", for: .normal)
         getDirectionsButton.tintColor = .customRed()
-        getDirectionsButton.setupShadowEffect(cornerRadius: 16, shadowRadius: 4, widthOffset: 0, heightOffset: 2)
+        getDirectionsButton.setupShadowEffect(cornerRadius: Constants.cornerRadius, shadowRadius: Constants.shadowRadius, widthOffset: 0, heightOffset: Constants.heightOffset)
     }
     
 }

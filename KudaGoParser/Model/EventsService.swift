@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EventsService {
+final class EventsService {
     
     enum Result<ResultDataType> {
            case data(ResultDataType)
@@ -94,7 +94,7 @@ class EventsService {
         }
     }
     
-    func decodeJSON<T: Decodable>(type: T.Type, from: Data?) -> T? {
+    private func decodeJSON<T: Decodable>(type: T.Type, from: Data?) -> T? {
         let decoder = JSONDecoder()
         guard let data = from else {
             return nil
